@@ -1,0 +1,69 @@
+server:
+  port: 8082
+# 开发环境配置
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/flashsell
+    username: flashsell
+    password: flashsell123
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+# JWT配置
+jwt:
+  secret: flashsell-dev-secret-key-must-be-at-least-256-bits-long-for-hs256
+  access-token-expiration: 3600000  # 1小时
+  refresh-token-expiration: 604800000  # 7天
+
+# 智谱AI配置 ${ZHIPU_API_KEY:your-api-key}
+zhipu:
+  api-key: 21769c08e3f443b6ae70a7a908447e2e.guoL1gRaQ9DFloqY
+  model: glm-4.7
+  temperature: 0.7
+  max-tokens: 2000
+
+# Bright Data Web Scraper API 配置
+brightdata:
+  webscraper:
+    base-url: https://api.brightdata.com
+    api-key: ${BRIGHTDATA_API_KEY:71fbf816-d2c9-4b90-8b8f-e0bfad1f19af}
+    zone-name: ${BRIGHTDATA_ZONE_NAME:isp_proxy1}
+    timeout: 30000
+    enabled: true
+
+  # MCP 配置（用于成本监控兼容性）
+  mcp:
+    api-token: ${BRIGHTDATA_API_TOKEN:your-api-token}
+    base-url: https://mcp.brightdata.com
+    mode: pro
+    timeout: 30000
+    connect-timeout: 10000
+    read-timeout: 30000
+    write-timeout: 10000
+    retry:
+      max-attempts: 3
+      delay: 1000
+      multiplier: 2.0
+      max-delay: 10000
+    rate-limit:
+      requests-per-minute: 60
+      enabled: true
+    cost-monitor:
+      daily-warning-threshold: 5000
+      monthly-warning-threshold: 100000
+      enabled: true
+
+# 支付宝配置
+alipay:
+  app-id: ${ALIPAY_APP_ID:your-app-id}
+  private-key: ${ALIPAY_PRIVATE_KEY:your-private-key}
+  public-key: ${ALIPAY_PUBLIC_KEY:your-public-key}
+  gateway-url: https://openapi.alipaydev.com/gateway.do
+  notify-url: http://localhost:8080/api/subscription/callback
+
+logging:
+  level:
+    com.flashsell: DEBUG

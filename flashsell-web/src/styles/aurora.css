@@ -1,0 +1,345 @@
+/**
+ * FlashSell Aurora Background Styles
+ * 
+ * This file implements the aurora background effect using radial gradients
+ * with subtle animation for movement. The effect creates a premium, modern
+ * feel with animated gradient blobs.
+ * 
+ * Colors:
+ * - Primary: Orange (#F97316)
+ * - Secondary: Blue (#3B82F6)
+ * - Accent: Green (#10B981)
+ * 
+ * Requirements: 2.1, 2.3
+ */
+
+/* ========================================
+ * Aurora Background - Dark Mode (Default)
+ * ======================================== */
+.aurora-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    /* Blue gradient - top center, elliptical */
+    radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      rgba(59, 130, 246, 0.15) 0%,
+      transparent 50%
+    ),
+    /* Orange gradient - right side */
+    radial-gradient(
+      ellipse 60% 40% at 80% 60%,
+      rgba(249, 115, 22, 0.1) 0%,
+      transparent 40%
+    ),
+    /* Green gradient - bottom left */
+    radial-gradient(
+      ellipse 50% 30% at 20% 80%,
+      rgba(16, 185, 129, 0.08) 0%,
+      transparent 40%
+    );
+  pointer-events: none;
+  z-index: -1;
+  animation: aurora-shift 20s ease-in-out infinite;
+}
+
+/* ========================================
+ * Aurora Animation Keyframes
+ * Subtle movement effect for the gradient blobs
+ * ======================================== */
+@keyframes aurora-shift {
+  0%, 100% {
+    background:
+      radial-gradient(
+        ellipse 80% 50% at 50% -20%,
+        rgba(59, 130, 246, 0.15) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 80% 60%,
+        rgba(249, 115, 22, 0.1) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        ellipse 50% 30% at 20% 80%,
+        rgba(16, 185, 129, 0.08) 0%,
+        transparent 40%
+      );
+  }
+  25% {
+    background:
+      radial-gradient(
+        ellipse 85% 55% at 45% -15%,
+        rgba(59, 130, 246, 0.18) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 55% 45% at 85% 55%,
+        rgba(249, 115, 22, 0.12) 0%,
+        transparent 45%
+      ),
+      radial-gradient(
+        ellipse 55% 35% at 15% 75%,
+        rgba(16, 185, 129, 0.1) 0%,
+        transparent 45%
+      );
+  }
+  50% {
+    background:
+      radial-gradient(
+        ellipse 75% 45% at 55% -25%,
+        rgba(59, 130, 246, 0.12) 0%,
+        transparent 45%
+      ),
+      radial-gradient(
+        ellipse 65% 35% at 75% 65%,
+        rgba(249, 115, 22, 0.14) 0%,
+        transparent 35%
+      ),
+      radial-gradient(
+        ellipse 45% 25% at 25% 85%,
+        rgba(16, 185, 129, 0.06) 0%,
+        transparent 35%
+      );
+  }
+  75% {
+    background:
+      radial-gradient(
+        ellipse 90% 60% at 48% -18%,
+        rgba(59, 130, 246, 0.16) 0%,
+        transparent 52%
+      ),
+      radial-gradient(
+        ellipse 58% 42% at 82% 58%,
+        rgba(249, 115, 22, 0.11) 0%,
+        transparent 42%
+      ),
+      radial-gradient(
+        ellipse 52% 32% at 18% 78%,
+        rgba(16, 185, 129, 0.09) 0%,
+        transparent 42%
+      );
+  }
+}
+
+/* ========================================
+ * Aurora Background - Light Mode
+ * Reduced opacity for better visibility on light backgrounds
+ * ======================================== */
+html.light .aurora-bg {
+  background:
+    /* Blue gradient - top center, more subtle */
+    radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      rgba(59, 130, 246, 0.08) 0%,
+      transparent 50%
+    ),
+    /* Orange gradient - right side, more subtle */
+    radial-gradient(
+      ellipse 60% 40% at 80% 60%,
+      rgba(249, 115, 22, 0.05) 0%,
+      transparent 40%
+    ),
+    /* Green gradient - bottom left, more subtle */
+    radial-gradient(
+      ellipse 50% 30% at 20% 80%,
+      rgba(16, 185, 129, 0.04) 0%,
+      transparent 40%
+    );
+  animation: aurora-shift-light 20s ease-in-out infinite;
+}
+
+/* ========================================
+ * Aurora Animation Keyframes - Light Mode
+ * More subtle animation for light theme
+ * ======================================== */
+@keyframes aurora-shift-light {
+  0%, 100% {
+    background:
+      radial-gradient(
+        ellipse 80% 50% at 50% -20%,
+        rgba(59, 130, 246, 0.08) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        ellipse 60% 40% at 80% 60%,
+        rgba(249, 115, 22, 0.05) 0%,
+        transparent 40%
+      ),
+      radial-gradient(
+        ellipse 50% 30% at 20% 80%,
+        rgba(16, 185, 129, 0.04) 0%,
+        transparent 40%
+      );
+  }
+  25% {
+    background:
+      radial-gradient(
+        ellipse 85% 55% at 45% -15%,
+        rgba(59, 130, 246, 0.1) 0%,
+        transparent 55%
+      ),
+      radial-gradient(
+        ellipse 55% 45% at 85% 55%,
+        rgba(249, 115, 22, 0.06) 0%,
+        transparent 45%
+      ),
+      radial-gradient(
+        ellipse 55% 35% at 15% 75%,
+        rgba(16, 185, 129, 0.05) 0%,
+        transparent 45%
+      );
+  }
+  50% {
+    background:
+      radial-gradient(
+        ellipse 75% 45% at 55% -25%,
+        rgba(59, 130, 246, 0.06) 0%,
+        transparent 45%
+      ),
+      radial-gradient(
+        ellipse 65% 35% at 75% 65%,
+        rgba(249, 115, 22, 0.07) 0%,
+        transparent 35%
+      ),
+      radial-gradient(
+        ellipse 45% 25% at 25% 85%,
+        rgba(16, 185, 129, 0.03) 0%,
+        transparent 35%
+      );
+  }
+  75% {
+    background:
+      radial-gradient(
+        ellipse 90% 60% at 48% -18%,
+        rgba(59, 130, 246, 0.09) 0%,
+        transparent 52%
+      ),
+      radial-gradient(
+        ellipse 58% 42% at 82% 58%,
+        rgba(249, 115, 22, 0.055) 0%,
+        transparent 42%
+      ),
+      radial-gradient(
+        ellipse 52% 32% at 18% 78%,
+        rgba(16, 185, 129, 0.045) 0%,
+        transparent 42%
+      );
+  }
+}
+
+/* ========================================
+ * Aurora Variants
+ * Additional aurora styles for specific use cases
+ * ======================================== */
+
+/* Aurora with stronger orange emphasis (for product/sales pages) */
+.aurora-bg--orange-emphasis {
+  background:
+    radial-gradient(
+      ellipse 70% 45% at 50% -15%,
+      rgba(59, 130, 246, 0.1) 0%,
+      transparent 45%
+    ),
+    radial-gradient(
+      ellipse 80% 50% at 70% 50%,
+      rgba(249, 115, 22, 0.18) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 50% 30% at 20% 80%,
+      rgba(16, 185, 129, 0.06) 0%,
+      transparent 40%
+    );
+}
+
+/* Aurora with stronger blue emphasis (for analytics/data pages) */
+.aurora-bg--blue-emphasis {
+  background:
+    radial-gradient(
+      ellipse 90% 60% at 50% -20%,
+      rgba(59, 130, 246, 0.22) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 50% 35% at 80% 60%,
+      rgba(249, 115, 22, 0.08) 0%,
+      transparent 35%
+    ),
+    radial-gradient(
+      ellipse 50% 30% at 20% 80%,
+      rgba(16, 185, 129, 0.08) 0%,
+      transparent 40%
+    );
+}
+
+/* Minimal aurora for content-heavy pages */
+.aurora-bg--minimal {
+  background:
+    radial-gradient(
+      ellipse 80% 50% at 50% -20%,
+      rgba(59, 130, 246, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 80% 60%,
+      rgba(249, 115, 22, 0.05) 0%,
+      transparent 40%
+    );
+  animation: none;
+}
+
+/* ========================================
+ * Reduced Motion Support (Accessibility)
+ * Disable animations for users who prefer reduced motion
+ * ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  .aurora-bg,
+  html.light .aurora-bg,
+  .aurora-bg--orange-emphasis,
+  .aurora-bg--blue-emphasis {
+    animation: none;
+  }
+}
+
+/* ========================================
+ * Aurora Overlay
+ * For use on top of images or other content
+ * ======================================== */
+.aurora-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background:
+    radial-gradient(
+      ellipse 80% 50% at 50% 0%,
+      rgba(59, 130, 246, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 100% 50%,
+      rgba(249, 115, 22, 0.08) 0%,
+      transparent 40%
+    );
+  pointer-events: none;
+  z-index: 1;
+}
+
+html.light .aurora-overlay {
+  background:
+    radial-gradient(
+      ellipse 80% 50% at 50% 0%,
+      rgba(59, 130, 246, 0.05) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      ellipse 60% 40% at 100% 50%,
+      rgba(249, 115, 22, 0.04) 0%,
+      transparent 40%
+    );
+}

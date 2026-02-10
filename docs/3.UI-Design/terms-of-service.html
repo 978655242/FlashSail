@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户协议 - FlashSell</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+        }
+
+        .header-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            font-size: 1.125rem;
+            color: rgba(203, 213, 225, 0.7);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #60A5FA;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            margin-bottom: 30px;
+            transition: all 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #3B82F6;
+            transform: translateX(-4px);
+        }
+
+        .content {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(51, 65, 85, 0.5);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+        }
+
+        .section {
+            margin-bottom: 32px;
+            padding-bottom: 28px;
+            border-bottom: 1px solid rgba(51, 65, 85, 0.3);
+        }
+
+        .section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.375rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.95);
+            margin: 0 0 16px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-number {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #3B82F6, #60A5FA);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .section-text {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: rgba(203, 213, 225, 0.85);
+            margin: 0 0 16px 0;
+        }
+
+        .section-text:last-child {
+            margin-bottom: 0;
+        }
+
+        .list {
+            list-style: none;
+            padding: 0;
+            margin: 16px 0 0 0;
+        }
+
+        .list li {
+            position: relative;
+            padding-left: 28px;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: rgba(203, 213, 225, 0.85);
+        }
+
+        .list li:last-child {
+            margin-bottom: 0;
+        }
+
+        .list li::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 10px;
+            width: 6px;
+            height: 6px;
+            background: #60A5FA;
+            border-radius: 50%;
+        }
+
+        .update-date {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 8px 16px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            border-radius: 8px;
+            font-size: 0.875rem;
+            color: #60A5FA;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 16px;
+            }
+
+            .header h1 {
+                font-size: 1.875rem;
+            }
+
+            .content {
+                padding: 24px;
+            }
+
+            .section-title {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+            </svg>
+            返回
+        </a>
+
+        <div class="header">
+            <div class="header-icon">
+                <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+            </div>
+            <h1>用户协议</h1>
+            <p>最后更新：2024年1月</p>
+        </div>
+
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">1</span>
+                    服务条款的接受
+                </h2>
+                <p class="section-text">欢迎使用 FlashSell。通过访问或使用我们的服务，您同意遵守本用户协议。如果您不同意本协议的任何条款，请勿使用我们的服务。</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">2</span>
+                    服务描述
+                </h2>
+                <p class="section-text">FlashSell 是一个 AI 驱动的跨境电商选品平台，提供以下服务：</p>
+                <ul class="list">
+                    <li>AI 智能产品推荐</li>
+                    <li>多平台产品搜索和比较</li>
+                    <li>市场趋势分析</li>
+                    <li>产品收藏和管理</li>
+                    <li>数据可视化报告</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">3</span>
+                    用户责任
+                </h2>
+                <p class="section-text">使用 FlashSell 服务时，您同意：</p>
+                <ul class="list">
+                    <li>提供准确、完整的注册信息</li>
+                    <li>维护账户安全，不与他人共享密码</li>
+                    <li>不对服务进行滥用或干扰</li>
+                    <li>不从事任何非法或欺诈活动</li>
+                    <li>尊重其他用户和第三方的权利</li>
+                    <li>遵守所有适用的法律法规</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">4</span>
+                    禁止行为
+                </h2>
+                <p class="section-text">您不得：</p>
+                <ul class="list">
+                    <li>逆向工程或试图破解服务代码</li>
+                    <li>使用自动化工具抓取数据</li>
+                    <li>传播病毒、恶意软件或其他有害代码</li>
+                    <li>未经授权访问他人账户</li>
+                    <li>发布虚假、误导性或诽谤性内容</li>
+                    <li>侵犯知识产权或其他权利</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">5</span>
+                    知识产权
+                </h2>
+                <p class="section-text">FlashSell 及其原始内容、功能和设计均为 FlashSell 及其许可方的专有财产，受知识产权法保护。</p>
+                <ul class="list">
+                    <li>平台设计、界面、代码归 FlashSell 所有</li>
+                    <li>用户保留其提交内容的所有权</li>
+                    <li>使用服务即授予 FlashSell 使用许可</li>
+                    <li>第三方产品信息归各自平台所有</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">6</span>
+                    订阅和付费
+                </h2>
+                <p class="section-text">FlashSell 提供免费和付费订阅计划：</p>
+                <ul class="list">
+                    <li>免费计划：基础功能和有限访问</li>
+                    <li>付费计划：解锁全部功能和高级特性</li>
+                    <li>订阅自动续订，可随时取消</li>
+                    <li>付费后不支持退款，除非法律要求</li>
+                    <li>价格可能变更，变更前30天通知</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">7</span>
+                    免责声明
+                </h2>
+                <p class="section-text">FlashSell 服务按"现状"提供，不提供任何明示或暗示的保证：</p>
+                <ul class="list">
+                    <li>服务不中断或无错误</li>
+                    <li>缺陷将被纠正</li>
+                    <li>服务无病毒或其他有害组件</li>
+                    <li>使用结果的准确性或可靠性</li>
+                </ul>
+                <p class="section-text">FlashSell 不对以下情况承担责任：</p>
+                <ul class="list">
+                    <li>因使用服务导致的任何间接或附带损害</li>
+                    <li>第三方产品或服务的质量、准确性</li>
+                    <li>因不可抗力导致的服务中断</li>
+                    <li>用户行为造成的损失或损害</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">8</span>
+                    服务终止
+                </h2>
+                <p class="section-text">我们可能因以下原因暂停或终止您的账户：</p>
+                <ul class="list">
+                    <li>违反本协议条款</li>
+                    <li>从事欺诈或非法活动</li>
+                    <li>长期未使用账户</li>
+                    <li>应法律或政府要求</li>
+                </ul>
+                <p class="section-text">您也可以随时终止账户，但终止后：</p>
+                <ul class="list">
+                    <li>您失去对服务的访问权限</li>
+                    <li>您的数据可能被删除或保留（根据我们的政策）</li>
+                    <li>已支付费用不予退还</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">9</span>
+                    争议解决
+                </h2>
+                <p class="section-text">本协议受中华人民共和国法律管辖。任何争议应首先通过友好协商解决。协商不成的，任何一方可向 FlashSell 所在地人民法院提起诉讼。</p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">10</span>
+                    其他条款
+                </h2>
+                <ul class="list">
+                    <li><strong>完整协议：</strong>本协议构成您与 FlashSell 之间的完整协议</li>
+                    <li><strong>可分割性：</strong>如某条款被认定无效，其余条款仍然有效</li>
+                    <li><strong>不放弃权利：</strong>我们未行使任何权利不构成对该权利的放弃</li>
+                    <li><strong>转让：</strong>您不得转让本协议，我们可自由转让</li>
+                </ul>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">
+                    <span class="section-number">11</span>
+                    联系我们
+                </h2>
+                <p class="section-text">如有任何问题或意见，请通过以下方式联系我们：</p>
+                <ul class="list">
+                    <li>电子邮件：legal@flashsell.com</li>
+                    <li>客服热线：400-XXX-XXXX</li>
+                    <li>在线客服：网站右下角聊天窗口</li>
+                </ul>
+                <span class="update-date">最后更新日期：2024年1月</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: flashsell
+  profiles:
+    active: dev
+
+  # 数据源配置
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/flashsell
+    username: flashsell
+    password: flashsell123
+
+  # Flyway 配置
+  flyway:
+    enabled: false
+
+  # Redis配置
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
+  # Jackson 配置
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  # Spring AI 智谱配置
+  ai:
+    zhipuai:
+      api-key: ${ZHIPU_API_KEY:test-api-key-placeholder}
+      chat:
+        options:
+          model: glm-4
+          temperature: 0.7
+
+# MyBatis-Plus配置
+mybatis-plus:
+  mapper-locations: classpath*:/mapper/**/*.xml
+  type-aliases-package: com.flashsell.infrastructure.dataobject
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deletedAt
+      logic-delete-value: now()
+      logic-not-delete-value: "null"
+
+# 日志配置
+logging:
+  level:
+    com.flashsell: DEBUG
+    org.springframework.security: DEBUG
+
+# Bright Data MCP配置（生产环境默认值）
+brightdata:
+  api-token: ${BRIGHTDATA_API_TOKEN:}
+  base-url: https://mcp.brightdata.com
+  mode: pro
+  timeout: 30000
+  connect-timeout: 10000
+  read-timeout: 30000
+  write-timeout: 10000
+  retry:
+    max-attempts: 3
+    delay: 1000
+    multiplier: 2.0
+    max-delay: 10000
+  rate-limit:
+    requests-per-minute: 100
+    enabled: true
+  cost-monitor:
+    daily-warning-threshold: 5000
+    monthly-warning-threshold: 100000
+    enabled: true
+
+# FlashSell 业务配置
+flashsell:
+  scheduler:
+    # 爆品分析定时任务 Cron 表达式（默认每日凌晨 2:00）
+    hot-product-cron: "0 0 2 * * ?"

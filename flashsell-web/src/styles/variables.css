@@ -1,0 +1,193 @@
+/**
+ * FlashSell CSS Variables
+ * 
+ * This file defines all CSS custom properties for the FlashSell theme system.
+ * It includes color palette, glassmorphism effects, shadows, transitions, and spacing.
+ * 
+ * Dark mode is the default theme.
+ * Light mode overrides are applied using the `html.light` selector.
+ * 
+ * Requirements: 1.1, 1.2, 1.6
+ */
+
+:root {
+  /* ========================================
+   * Primary Colors
+   * ======================================== */
+  --primary: #F97316;
+  --primary-hover: #EA580C;
+  --secondary: #3B82F6;
+  --secondary-hover: #2563EB;
+
+  /* ========================================
+   * Background Colors - Dark Mode (Default)
+   * ======================================== */
+  --bg-dark: #0F172A;
+  --bg-card: #1E293B;
+  --bg-card-hover: #334155;
+
+  /* ========================================
+   * Text Colors
+   * ======================================== */
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+
+  /* ========================================
+   * Border Colors
+   * ======================================== */
+  --border: #334155;
+  --border-subtle: rgba(51, 65, 85, 0.5);
+  --border-hover: #475569;
+
+  /* ========================================
+   * Status Colors
+   * ======================================== */
+  --success: #10B981;
+  --success-hover: #059669;
+  --danger: #EF4444;
+  --danger-hover: #DC2626;
+  --warning: #F59E0B;
+  --warning-hover: #D97706;
+  --info: #3B82F6;
+  --info-hover: #2563EB;
+
+  /* ========================================
+   * Glassmorphism Effects
+   * ======================================== */
+  --glass-bg-dark: rgba(30, 41, 59, 0.7);
+  --glass-bg-light: rgba(255, 255, 255, 0.75);
+  --glass-border-dark: rgba(51, 65, 85, 0.5);
+  --glass-border-light: rgba(203, 213, 225, 0.9);
+  --glass-blur: 12px;
+
+  /* ========================================
+   * Shadows
+   * ======================================== */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
+  --shadow-glow-orange: 0 0 20px rgba(249, 115, 22, 0.2);
+  --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.2);
+  --shadow-glow-success: 0 0 20px rgba(16, 185, 129, 0.2);
+
+  /* ========================================
+   * Transitions
+   * ======================================== */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.3s ease;
+
+  /* ========================================
+   * Border Radius
+   * ======================================== */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 20px;
+  --radius-full: 9999px;
+
+  /* ========================================
+   * Spacing - Layout
+   * ======================================== */
+  --sidebar-width: 260px;
+  --sidebar-collapsed-width: 72px;
+  --topnav-height: 64px;
+  --content-padding: 24px;
+  --card-padding: 20px;
+
+  /* ========================================
+   * Z-Index Scale
+   * ======================================== */
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-fixed: 300;
+  --z-modal-backdrop: 400;
+  --z-modal: 500;
+  --z-popover: 600;
+  --z-tooltip: 700;
+  --z-toast: 800;
+
+  /* ========================================
+   * Typography
+   * ======================================== */
+  --font-family-sans: 'Fira Sans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-family-mono: 'Fira Code', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+  --font-size-4xl: 2.25rem;   /* 36px */
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+
+  /* ========================================
+   * Platform Colors (for badges)
+   * ======================================== */
+  --platform-amazon: #FF9900;
+  --platform-ebay: #E53238;
+  --platform-aliexpress: #FF4747;
+  --platform-tiktok: #000000;
+  --platform-shopify: #96BF48;
+}
+
+/* ========================================
+ * Light Mode Overrides
+ * Applied when html element has 'light' class
+ * ======================================== */
+html.light {
+  /* Background Colors - Light Mode */
+  --bg-dark: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F1F5F9;
+
+  /* Text Colors - Light Mode */
+  --text-primary: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+
+  /* Border Colors - Light Mode */
+  --border: #E2E8F0;
+  --border-subtle: rgba(203, 213, 225, 0.9);
+  --border-hover: #CBD5E1;
+
+  /* Glassmorphism - Light Mode */
+  --glass-bg-dark: rgba(255, 255, 255, 0.85);
+  --glass-border-dark: rgba(226, 232, 240, 0.8);
+
+  /* Shadows - Light Mode (slightly stronger for visibility) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.18);
+  --shadow-glow-orange: 0 0 20px rgba(249, 115, 22, 0.15);
+  --shadow-glow-blue: 0 0 20px rgba(59, 130, 246, 0.15);
+  --shadow-glow-success: 0 0 20px rgba(16, 185, 129, 0.15);
+
+  /* Platform Colors - Light Mode (TikTok needs adjustment) */
+  --platform-tiktok: #25F4EE;
+}
+
+/* ========================================
+ * Reduced Motion Support (Accessibility)
+ * ======================================== */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0.01ms;
+    --transition-normal: 0.01ms;
+    --transition-slow: 0.01ms;
+  }
+}

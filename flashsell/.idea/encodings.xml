@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/flashsell-adapter/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flashsell-adapter/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flashsell-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flashsell-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flashsell-client/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flashsell-client/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flashsell-domain/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flashsell-domain/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flashsell-infrastructure/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/flashsell-infrastructure/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/start/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/start/src/main/resources" charset="UTF-8" />
+  </component>
+</project>
