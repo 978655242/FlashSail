@@ -48,6 +48,8 @@ public class SecurityConfig {
             "/api/hot-products/**",
             "/api/search/**",
             "/api/products/**",
+            "/api/dashboard/**",
+            "/api/market/**",
             "/actuator/**",
             "/error"
     };
