@@ -30,16 +30,17 @@ const categoryArb = fc.record<Category>({
 
 const productArb = fc.record<ProductDTO>({
   id: fc.nat({ max: 100000 }),
-  asin: fc.string({ minLength: 10, maxLength: 10 }).map(s => s.toUpperCase()),
   title: fc.string({ minLength: 1, maxLength: 200 }).filter(s => s.trim().length > 0),
   image: fc.oneof(
     fc.constant(''),
     fc.webUrl()
   ),
-  currentPrice: fc.float({ min: Math.fround(0.01), max: Math.fround(99999.99), noNaN: true }),
+  price: fc.float({ min: Math.fround(0.1), max: Math.fround(99999.99), noNaN: true }),
   bsrRank: fc.nat({ max: 1000000 }),
   reviewCount: fc.nat({ max: 100000 }),
   rating: fc.float({ min: Math.fround(0), max: Math.fround(5), noNaN: true }),
+  categoryId: fc.nat({ max: 1000 }),
+  categoryName: fc.string({ minLength: 1, maxLength: 30 }).filter(s => s.trim().length > 0),
   competitionScore: fc.float({ min: Math.fround(0), max: Math.fround(1), noNaN: true }),
   category: categoryArb
 })
@@ -56,13 +57,14 @@ interface ProductWithBadge extends ProductDTO {
 
 const productWithBadgeArb = fc.record<ProductWithBadge>({
   id: fc.nat({ max: 100000 }),
-  asin: fc.string({ minLength: 10, maxLength: 10 }).map(s => s.toUpperCase()),
   title: fc.string({ minLength: 1, maxLength: 200 }).filter(s => s.trim().length > 0),
   image: fc.oneof(fc.constant(''), fc.webUrl()),
-  currentPrice: fc.float({ min: Math.fround(0.01), max: Math.fround(99999.99), noNaN: true }),
+  price: fc.float({ min: Math.fround(0.1), max: Math.fround(99999.99), noNaN: true }),
   bsrRank: fc.nat({ max: 1000000 }),
   reviewCount: fc.nat({ max: 100000 }),
   rating: fc.float({ min: Math.fround(0), max: Math.fround(5), noNaN: true }),
+  categoryId: fc.nat({ max: 1000 }),
+  categoryName: fc.string({ minLength: 1, maxLength: 30 }).filter(s => s.trim().length > 0),
   competitionScore: fc.float({ min: Math.fround(0), max: Math.fround(1), noNaN: true }),
   category: categoryArb,
   badge: badgeTypeArb
@@ -148,12 +150,12 @@ describe('ProductCard Property Tests', () => {
 
             // Find the price element
             const priceElement = wrapper.find('.text-orange-400')
-            
+
             // Price should exist
             expect(priceElement.exists()).toBe(true)
-            
+
             // Price should be formatted with 2 decimal places (component shows just the number)
-            const expectedPrice = product.currentPrice.toFixed(2)
+            const expectedPrice = product.price.toFixed(2)
             expect(priceElement.text()).toContain(expectedPrice)
 
             wrapper.unmount()
@@ -242,16 +244,16 @@ describe('ProductCard Property Tests', () => {
 
             // Find the tags container and look for category badge
             const tagsContainer = wrapper.find('.flex.flex-wrap.gap-2')
-            
+
             // Tags container should exist
             expect(tagsContainer.exists()).toBe(true)
-            
+
             // Find the category span element and check its text content
-            const categorySpan = tagsContainer.find('span.bg-slate-100')
+            const categorySpan = tagsContainer.find('.category-tag')
             expect(categorySpan.exists()).toBe(true)
-            
-            // Should display category name or '未分类' (text() trims whitespace like browsers do)
-            const expectedCategory = (product.category?.name || '未分类').trim()
+
+            // Should display categoryName, category.name, or '未分类'
+            const expectedCategory = (product.categoryName || product.category?.name || '未分类').trim()
             expect(categorySpan.text().trim()).toBe(expectedCategory)
 
             wrapper.unmount()
@@ -720,11 +722,10 @@ describe('ProductCard Property Tests', () => {
             // Verify emitted product matches input product
             const emittedEvents = wrapper.emitted('click')
             const emittedProduct = emittedEvents?.[0]?.[0] as ProductDTO
-            
+
             expect(emittedProduct.id).toBe(product.id)
             expect(emittedProduct.title).toBe(product.title)
-            expect(emittedProduct.currentPrice).toBe(product.currentPrice)
-            expect(emittedProduct.asin).toBe(product.asin)
+            expect(emittedProduct.price).toBe(product.price)
 
             wrapper.unmount()
           }

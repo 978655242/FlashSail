@@ -657,8 +657,8 @@ describe('Sidebar Property Tests', () => {
 
             // Find plan display
             const userSection = wrapper.find('.user-section')
-            const planElement = userSection.find('.text-xs.text-slate-500')
-            
+            const planElement = userSection.find('.user-plan')
+
             // Map subscription level to display name
             const planNames: Record<string, string> = {
               'FREE': 'Free',
@@ -666,8 +666,9 @@ describe('Sidebar Property Tests', () => {
               'PRO': 'Pro'
             }
             const expectedPlan = planNames[subscriptionLevel] || 'Free'
-            
-            // Should display the plan name
+
+            // Should display the plan name (format: "Plan · Member")
+            expect(planElement.exists()).toBe(true)
             expect(planElement.text()).toContain(expectedPlan)
 
             wrapper.unmount()
