@@ -16,7 +16,9 @@ spring:
 
   # Flyway 配置
   flyway:
-    enabled: false
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 0
 
   # Redis配置
   data:
