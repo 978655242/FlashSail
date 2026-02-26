@@ -1,10 +1,10 @@
 <script setup lang="ts">
 /**
  * Favorites Page
- * 
+ *
  * Displays user's favorited products in a grid layout with the ability
  * to remove products from favorites.
- * 
+ *
  * Requirements: 7.1, 7.2, 7.3, 7.5, 7.6
  * - 7.1: Display a grid of favorited product cards
  * - 7.2: Support removing products from favorites
@@ -17,10 +17,11 @@ import { useFavoritesStore } from '@/stores/favorites'
 import { useI18n } from '@/composables/useI18n'
 import { useToast } from '@/composables/useToast'
 import { useConfirm } from '@/composables/useConfirm'
-import ProductGrid from '@/components/ProductGrid.vue'
+import ProductCard from '@/components/ProductCard.vue'
 import ProductDetailModal from '@/components/ProductDetailModal.vue'
 import GlassCard from '@/components/GlassCard.vue'
 import EmptyState from '@/components/EmptyState.vue'
+import CardSkeleton from '@/components/CardSkeleton.vue'
 import type { ProductDTO } from '@/types/product'
 import type { ProductDetailRes } from '@/types/product'
 import { getProductDetail } from '@/api/product'
@@ -134,20 +135,25 @@ function handleGoToSearch() {
       @action="handleGoToSearch"
     />
 
-    <!-- Favorites Grid -->
-    <ProductGrid
-      v-else
-      :products="favoritesStore.favorites"
-      :loading="favoritesStore.isLoading && favoritesStore.favorites.length === 0"
-      :skeleton-count="8"
-      :show-favorite="true"
-      :favorite-ids="favoritesStore.favoriteIds"
-      :empty-title="t('favorites.empty')"
-      :empty-description="t('favorites.emptyHint')"
-      empty-icon="favorite"
-      @click="handleProductClick"
-      @favorite="handleRemoveFavorite"
+    <!-- Loading State -->
+    <CardSkeleton
+      v-else-if="favoritesStore.isLoading && favoritesStore.favorites.length === 0"
+      :count="8"
+      :columns="4"
     />
+
+    <!-- Favorites Grid - Same style as Search page -->
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <ProductCard
+        v-for="product in favoritesStore.favorites"
+        :key="product.id"
+        :product="product"
+        :show-favorite="true"
+        :is-favorite="true"
+        @click="handleProductClick"
+        @favorite="handleRemoveFavorite"
+      />
+    </div>
 
     <!-- Load More Button -->
     <div
