@@ -59,6 +59,7 @@ public class SecurityConfig {
             "/api/products/**",
             "/api/dashboard/**",
             "/api/market/**",
+            "/api/subscription/plans",
             "/actuator/**",
             "/error"
     };
