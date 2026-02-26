@@ -2,6 +2,7 @@ package com.flashsell.infrastructure.user.convertor;
 
 import com.flashsell.domain.user.entity.SubscriptionLevel;
 import com.flashsell.domain.user.entity.User;
+import com.flashsell.domain.user.entity.UserRole;
 import com.flashsell.infrastructure.user.dataobject.UserDO;
 import org.springframework.stereotype.Component;
 
@@ -30,6 +31,7 @@ public class UserConvertor {
                 .nickname(userDO.getNickname())
                 .avatarUrl(userDO.getAvatarUrl())
                 .email(userDO.getEmail())
+                .role(parseUserRole(userDO.getRole()))
                 .subscriptionLevel(parseSubscriptionLevel(userDO.getSubscriptionLevel()))
                 .subscriptionExpireDate(userDO.getSubscriptionExpireDate())
                 .notificationEnabled(userDO.getNotificationEnabled())
@@ -62,6 +64,7 @@ public class UserConvertor {
                 .nickname(user.getNickname())
                 .avatarUrl(user.getAvatarUrl())
                 .email(user.getEmail())
+                .role(formatUserRole(user.getRole()))
                 .subscriptionLevel(formatSubscriptionLevel(user.getSubscriptionLevel()))
                 .subscriptionExpireDate(user.getSubscriptionExpireDate())
                 .notificationEnabled(user.getNotificationEnabled())
@@ -74,6 +77,29 @@ public class UserConvertor {
                 .updatedAt(user.getUpdatedAt())
                 .deletedAt(user.getDeletedAt())
                 .build();
+    }
+
+    /**
+     * 解析用户角色字符串为枚举
+     *
+     * @param role 角色字符串
+     * @return 用户角色枚举
+     */
+    private UserRole parseUserRole(String role) {
+        return UserRole.fromString(role);
+    }
+
+    /**
+     * 格式化用户角色枚举为字符串
+     *
+     * @param role 用户角色枚举
+     * @return 角色字符串
+     */
+    private String formatUserRole(UserRole role) {
+        if (role == null) {
+            return UserRole.USER.name();
+        }
+        return role.name();
     }
 
     /**

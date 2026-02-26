@@ -55,23 +55,23 @@ const selectedPlatforms = ref<string[]>([])
 
 // Suggestion chips
 const suggestions = computed(() => [
-  { id: 'hot', label: t('search.suggestions.hotProducts'), query: '热门爆品' },
-  { id: 'trending', label: t('search.suggestions.trending'), query: '趋势上升产品' },
-  { id: 'profit', label: t('search.suggestions.highProfit'), query: '高利润产品' },
-  { id: 'new', label: t('search.suggestions.newArrivals'), query: '新品上架' }
+  { id: 'hot', label: t('search.suggestions.hotProducts', '热门爆品'), query: '热门爆品' },
+  { id: 'trending', label: t('search.suggestions.trending', '趋势上升'), query: '趋势上升产品' },
+  { id: 'profit', label: t('search.suggestions.highProfit', '高利润'), query: '高利润产品' },
+  { id: 'new', label: t('search.suggestions.newArrivals', '新品上架'), query: '新品上架' }
 ])
 
 // Platform options
 const platformOptions = [
-  { id: 'amazon', label: t('platforms.amazon') },
-  { id: 'ebay', label: t('platforms.ebay') },
-  { id: 'aliexpress', label: t('platforms.aliexpress') },
-  { id: 'tiktok', label: t('platforms.tiktok') }
+  { id: 'amazon', label: t('platforms.amazon', '亚马逊') },
+  { id: 'ebay', label: t('platforms.ebay', 'eBay') },
+  { id: 'aliexpress', label: t('platforms.aliexpress', '速卖通') },
+  { id: 'tiktok', label: t('platforms.tiktok', 'TikTok') }
 ]
 
 // Price range options
 const priceRangeOptions = [
-  { id: 'all', label: t('search.filters.all'), min: undefined, max: undefined },
+  { id: 'all', label: t('search.filters.all', '全部'), min: undefined, max: undefined },
   { id: 'low', label: '$0-$25', min: 0, max: 25 },
   { id: 'mid', label: '$25-$100', min: 25, max: 100 },
   { id: 'high', label: '$100+', min: 100, max: undefined }
@@ -96,10 +96,10 @@ function scrollToBottom() {
 /** Update thinking steps during search */
 function updateThinkingSteps(activeStep: number) {
   const steps: ThinkingStep[] = [
-    { id: 'analyzing', label: t('search.thinking.analyzing'), status: 'pending' },
-    { id: 'searching', label: t('search.thinking.searching'), status: 'pending' },
-    { id: 'evaluating', label: t('search.thinking.evaluating'), status: 'pending' },
-    { id: 'generating', label: t('search.thinking.generating'), status: 'pending' }
+    { id: 'analyzing', label: t('search.thinking.analyzing', '正在分析您的需求...'), status: 'pending' },
+    { id: 'searching', label: t('search.thinking.searching', '正在搜索相关产品...'), status: 'pending' },
+    { id: 'evaluating', label: t('search.thinking.evaluating', '正在评估产品数据...'), status: 'pending' },
+    { id: 'generating', label: t('search.thinking.generating', '正在生成推荐结果...'), status: 'pending' }
   ]
   
   steps.forEach((step, index) => {
@@ -155,20 +155,20 @@ async function handleSearch(query: string) {
     const aiMessage: ChatMessageData = {
       id: `ai-${Date.now()}`,
       type: 'ai',
-      content: searchStore.aiSummary || t('search.results'),
+      content: searchStore.aiSummary || t('search.results', '搜索结果'),
       timestamp: new Date(),
       products: searchStore.searchResults
     }
     chatMessages.value.push(aiMessage)
-    
+
   } catch (error) {
     clearInterval(stepInterval)
-    
+
     // Add error message
     const errorMessage: ChatMessageData = {
       id: `ai-error-${Date.now()}`,
       type: 'ai',
-      content: searchStore.error || t('common.error'),
+      content: searchStore.error || t('common.error', '出错了'),
       timestamp: new Date()
     }
     chatMessages.value.push(errorMessage)
@@ -259,8 +259,8 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
         </div>
         
         <!-- Welcome Text -->
-        <h1 class="text-2xl font-bold text-white mb-2">{{ t('search.title') }}</h1>
-        <p class="text-slate-400 text-center max-w-md mb-8">{{ t('search.subtitle') }}</p>
+        <h1 class="text-2xl font-bold text-[var(--text-primary)] mb-2">{{ t('search.title') }}</h1>
+        <p class="text-[var(--text-muted)] text-center max-w-md mb-8">{{ t('search.subtitle') }}</p>
         
         <!-- Suggestion Chips -->
         <div class="flex flex-wrap justify-center gap-2">
@@ -301,7 +301,7 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
                 activeFilter === 'all'
                   ? 'bg-orange-500 text-white'
-                  : 'glass-card text-slate-400 hover:text-white'
+                  : 'glass-card text-[var(--text-muted)] hover:text-[var(--text-primary)]'
               ]"
               @click="handleFilterChange('all')"
             >
@@ -312,7 +312,7 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
                 activeFilter === 'category'
                   ? 'bg-orange-500 text-white'
-                  : 'glass-card text-slate-400 hover:text-white'
+                  : 'glass-card text-[var(--text-muted)] hover:text-[var(--text-primary)]'
               ]"
               @click="handleFilterChange('category')"
             >
@@ -323,7 +323,7 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
                 activeFilter === 'price'
                   ? 'bg-orange-500 text-white'
-                  : 'glass-card text-slate-400 hover:text-white'
+                  : 'glass-card text-[var(--text-muted)] hover:text-[var(--text-primary)]'
               ]"
               @click="handleFilterChange('price')"
             >
@@ -334,7 +334,7 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
                 'px-3 py-1.5 text-sm rounded-lg transition-colors',
                 activeFilter === 'platform'
                   ? 'bg-orange-500 text-white'
-                  : 'glass-card text-slate-400 hover:text-white'
+                  : 'glass-card text-[var(--text-muted)] hover:text-[var(--text-primary)]'
               ]"
               @click="handleFilterChange('platform')"
             >
@@ -352,7 +352,7 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
                   'px-3 py-1.5 text-sm rounded-lg transition-colors',
                   searchStore.filters.categoryId === group.id
                     ? 'bg-orange-500 text-white'
-                    : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                    : 'filter-btn text-[var(--text-secondary)]'
                 ]"
                 @click="searchStore.updateFilters({ categoryId: group.id })"
               >
@@ -371,7 +371,7 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
                   'px-3 py-1.5 text-sm rounded-lg transition-colors',
                   priceRange.min === option.min && priceRange.max === option.max
                     ? 'bg-orange-500 text-white'
-                    : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                    : 'filter-btn text-[var(--text-secondary)]'
                 ]"
                 @click="handlePriceRangeChange(option)"
               >
@@ -390,7 +390,7 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
                   'px-3 py-1.5 text-sm rounded-lg transition-colors',
                   selectedPlatforms.includes(platform.id)
                     ? 'bg-orange-500 text-white'
-                    : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                    : 'filter-btn text-[var(--text-secondary)]'
                 ]"
                 @click="handlePlatformToggle(platform.id)"
               >
@@ -409,14 +409,14 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
               </div>
               <div>
                 <h4 class="text-sm font-medium text-orange-400 mb-1">{{ t('search.aiSummary') }}</h4>
-                <p class="text-sm text-slate-400">{{ searchStore.aiSummary }}</p>
+                <p class="text-sm text-[var(--text-secondary)]">{{ searchStore.aiSummary }}</p>
               </div>
             </div>
           </div>
 
           <!-- Results Count -->
-          <p class="text-sm text-slate-500 mb-4">
-            {{ t('search.results') }}: <span class="text-white font-medium">{{ searchStore.total }}</span>
+          <p class="text-sm text-[var(--text-muted)] mb-4">
+            {{ t('search.results') }}: <span class="text-[var(--text-primary)] font-medium">{{ searchStore.total }}</span>
           </p>
 
           <!-- Product Grid -->
@@ -435,7 +435,7 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
           <div v-if="searchStore.hasMore" class="mt-6 flex justify-center">
             <button
               :disabled="searchStore.isLoadingMore"
-              class="px-6 py-2.5 glass-card text-slate-300 hover:text-white hover:border-orange-500/50 transition-all disabled:opacity-50"
+              class="px-6 py-2.5 glass-card text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:border-orange-500/50 transition-all disabled:opacity-50"
               @click="searchStore.loadMore"
             >
               <span v-if="searchStore.isLoadingMore" class="flex items-center gap-2">
@@ -453,14 +453,14 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
     </div>
 
     <!-- Search Input (Fixed at Bottom) -->
-    <div class="flex-shrink-0 p-4 border-t border-slate-700/50">
+    <div class="search-input-footer flex-shrink-0 p-4">
       <div class="max-w-4xl mx-auto">
         <!-- Suggestion Chips (when chat started but no search in progress) -->
         <div v-if="hasChatStarted && !isSearching" class="flex flex-wrap gap-2 mb-3">
           <button
             v-for="suggestion in suggestions"
             :key="suggestion.id"
-            class="px-3 py-1 text-xs glass-card text-slate-400 hover:text-white hover:border-orange-500/50 transition-all"
+            class="px-3 py-1 text-xs glass-card text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:border-orange-500/50 transition-all"
             @click="handleSuggestionClick(suggestion.query)"
           >
             {{ suggestion.label }}
@@ -485,3 +485,32 @@ const hasChatStarted = computed(() => chatMessages.value.length > 0)
     />
   </div>
 </template>
+
+<style scoped>
+/* Filter button background */
+.filter-btn {
+  background: var(--bg-card-hover);
+}
+
+.filter-btn:hover {
+  background: var(--bg-card);
+}
+
+/* Search input footer */
+.search-input-footer {
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* Light mode adjustments */
+:global(html.light) .filter-btn {
+  background: #f1f5f9;
+}
+
+:global(html.light) .filter-btn:hover {
+  background: #e2e8f0;
+}
+
+:global(html.light) .search-input-footer {
+  border-top-color: #e2e8f0;
+}
+</style>

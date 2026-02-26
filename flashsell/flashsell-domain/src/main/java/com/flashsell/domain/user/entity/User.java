@@ -17,37 +17,42 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
-    
+
     /**
      * 用户ID
      */
     private Long id;
-    
+
     /**
      * 手机号
      */
     private String phone;
-    
+
     /**
      * 密码哈希值
      */
     private String passwordHash;
-    
+
     /**
      * 用户昵称
      */
     private String nickname;
-    
+
     /**
      * 头像URL
      */
     private String avatarUrl;
-    
+
     /**
      * 邮箱地址
      */
     private String email;
-    
+
+    /**
+     * 用户角色
+     */
+    private UserRole role;
+
     /**
      * 订阅等级
      */

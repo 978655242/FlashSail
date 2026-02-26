@@ -79,4 +79,12 @@ public interface CategoryGateway {
      * @return 品类组总数
      */
     int countAllGroups();
+
+    /**
+     * 根据ID列表批量查询品类
+     *
+     * @param ids 品类ID列表
+     * @return 品类列表
+     */
+    List<Category> findByIds(List<Long> ids);
 }

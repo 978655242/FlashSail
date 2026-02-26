@@ -24,7 +24,7 @@ let chartInstance: echarts.ECharts | null = null
 // 格式化价格
 const formattedPrice = computed(() => {
   if (!props.product) return ''
-  return `$${props.product.currentPrice.toFixed(2)}`
+  return `$${(props.product.price ?? props.product.currentPrice ?? 0).toFixed(2)}`
 })
 
 // 格式化评分
@@ -49,10 +49,11 @@ const formattedReviewCount = computed(() => {
 const formattedBsr = computed(() => {
   if (!props.product) return ''
   const rank = props.product.bsrRank
+  if (rank === null || rank === undefined) return '暂无数据'
   if (rank >= 10000) {
-    return `${(rank / 10000).toFixed(1)}万`
+    return `#${(rank / 10000).toFixed(1)}万`
   } else if (rank >= 1000) {
-    return `${(rank / 1000).toFixed(1)}k`
+    return `#${(rank / 1000).toFixed(1)}k`
   }
   return `#${rank}`
 })
@@ -61,6 +62,7 @@ const formattedBsr = computed(() => {
 const competitionColor = computed(() => {
   if (!props.product) return ''
   const score = props.product.competitionScore
+  if (score === null || score === undefined) return 'text-slate-500'
   if (score >= 0.7) return 'text-red-500'
   if (score >= 0.4) return 'text-yellow-500'
   return 'text-green-500'
@@ -70,6 +72,7 @@ const competitionColor = computed(() => {
 const competitionText = computed(() => {
   if (!props.product) return ''
   const score = props.product.competitionScore
+  if (score === null || score === undefined) return '暂无数据'
   if (score >= 0.7) return '高竞争'
   if (score >= 0.4) return '中竞争'
   return '低竞争'
@@ -81,7 +84,7 @@ const priceChange = computed(() => {
     return null
   }
   const history = props.product.priceHistory
-  const current = props.product.currentPrice
+  const current = props.product.price ?? props.product.currentPrice ?? 0
   const previous = history[history.length - 2]?.price || current
   const change = current - previous
   const percentage = ((change / previous) * 100).toFixed(1)
@@ -356,7 +359,7 @@ function handleBackdropClick(e: MouseEvent) {
                   </div>
 
                   <!-- 数据指标 -->
-                  <div class="grid grid-cols-3 gap-4 mb-6">
+                  <div class="grid grid-cols-2 gap-4 mb-6">
                     <div class="p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg">
                       <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">BSR 排名</p>
                       <p class="text-lg font-semibold text-slate-800 dark:text-white">{{ formattedBsr }}</p>
@@ -367,7 +370,15 @@ function handleBackdropClick(e: MouseEvent) {
                     </div>
                     <div class="p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg">
                       <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">品类</p>
-                      <p class="text-sm font-medium text-slate-800 dark:text-white truncate">{{ product.category?.name || '未分类' }}</p>
+                      <p class="text-sm font-medium text-slate-800 dark:text-white truncate">{{ product.categoryName || product.category?.name || '未分类' }}</p>
+                    </div>
+                    <div class="p-3 bg-slate-100 dark:bg-slate-700/50 rounded-lg">
+                      <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">数据来源</p>
+                      <div class="flex items-center gap-2">
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">
+                          Amazon
+                        </span>
+                      </div>
                     </div>
                   </div>
 

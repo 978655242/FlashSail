@@ -1,14 +1,15 @@
 export interface ProductDTO {
   id: number
-  asin: string
   title: string
   image: string
-  currentPrice: number
-  bsrRank: number
+  price: number
+  bsrRank: number | null
   reviewCount: number
   rating: number
-  competitionScore: number
-  category: Category
+  categoryId: number | null
+  categoryName: string | null
+  competitionScore?: number
+  category?: Category
 }
 
 export interface Category {
@@ -32,14 +33,17 @@ export interface ProductDetailRes {
   id: number
   title: string
   image: string
-  currentPrice: number
+  price?: number
+  currentPrice?: number
   priceHistory: PricePoint[]
-  bsrRank: number
+  bsrRank: number | null
   reviewCount: number
   rating: number
-  competitionScore: number
-  aiRecommendation: string
-  category: Category
+  competitionScore?: number
+  aiRecommendation?: string
+  categoryId?: number | null
+  categoryName?: string | null
+  category?: Category
 }
 
 export interface SearchReq {
@@ -56,8 +60,11 @@ export interface SearchRes {
   products: ProductDTO[]
   total: number
   page: number
+  pageSize: number
   hasMore: boolean
   aiSummary: string
+  dataFreshness?: string
+  freshnessMessage?: string | null
 }
 
 export interface CategoriesRes {

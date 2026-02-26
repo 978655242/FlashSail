@@ -257,12 +257,12 @@ onMounted(() => {
         <div class="glass-card p-6">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm text-slate-500 dark:text-slate-400">今日新品发现</p>
-              <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1">
+              <p class="text-sm text-[var(--text-muted)]">今日新品发现</p>
+              <p class="text-2xl font-bold text-[var(--text-primary)] mt-1">
                 {{ overview?.todayNewProducts || 0 }}
               </p>
             </div>
-            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center">
+            <div class="w-12 h-12 icon-box icon-box-blue rounded-lg flex items-center justify-center">
               <svg class="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
@@ -273,12 +273,12 @@ onMounted(() => {
         <div class="glass-card p-6">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm text-slate-500 dark:text-slate-400">潜力爆品推荐</p>
-              <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1">
+              <p class="text-sm text-[var(--text-muted)]">潜力爆品推荐</p>
+              <p class="text-2xl font-bold text-[var(--text-primary)] mt-1">
                 {{ overview?.potentialHotProducts || 0 }}
               </p>
             </div>
-            <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
+            <div class="w-12 h-12 icon-box icon-box-orange rounded-lg flex items-center justify-center">
               <svg class="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
               </svg>
@@ -289,12 +289,12 @@ onMounted(() => {
         <div class="glass-card p-6">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm text-slate-500 dark:text-slate-400">收藏产品数</p>
-              <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1">
+              <p class="text-sm text-[var(--text-muted)]">收藏产品数</p>
+              <p class="text-2xl font-bold text-[var(--text-primary)] mt-1">
                 {{ overview?.favoriteCount || 0 }}
               </p>
             </div>
-            <div class="w-12 h-12 bg-pink-100 dark:bg-pink-900/30 rounded-lg flex items-center justify-center">
+            <div class="w-12 h-12 icon-box icon-box-pink rounded-lg flex items-center justify-center">
               <svg class="w-6 h-6 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
               </svg>
@@ -305,12 +305,12 @@ onMounted(() => {
         <div class="glass-card p-6">
           <div class="flex items-center justify-between">
             <div>
-              <p class="text-sm text-slate-500 dark:text-slate-400">AI 推荐准确率</p>
-              <p class="text-2xl font-bold text-slate-800 dark:text-white mt-1">
+              <p class="text-sm text-[var(--text-muted)]">AI 推荐准确率</p>
+              <p class="text-2xl font-bold text-[var(--text-primary)] mt-1">
                 {{ overview?.aiAccuracyRate || 0 }}%
               </p>
             </div>
-            <div class="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+            <div class="w-12 h-12 icon-box icon-box-green rounded-lg flex items-center justify-center">
               <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -321,13 +321,13 @@ onMounted(() => {
 
       <!-- 快速搜索入口 -->
       <div class="glass-card p-6 mb-8">
-        <h2 class="text-lg font-semibold text-slate-800 dark:text-white mb-4">快速搜索</h2>
+        <h2 class="text-lg font-semibold text-[var(--text-primary)] mb-4">快速搜索</h2>
         <form @submit.prevent="handleQuickSearch" class="flex gap-4">
           <input
             v-model="searchQuery"
             type="text"
             placeholder="输入产品关键词，AI 帮你找爆品..."
-            class="flex-1 px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent dark:bg-slate-700 dark:text-white"
+            class="search-input flex-1 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
           />
           <button
             type="submit"
@@ -340,12 +340,12 @@ onMounted(() => {
 
         <!-- 热门关键词 -->
         <div v-if="hotKeywords?.keywords.length" class="mt-4 flex flex-wrap gap-2 items-center">
-          <span class="text-sm text-slate-500 dark:text-slate-400">热门搜索：</span>
+          <span class="text-sm text-[var(--text-muted)]">热门搜索：</span>
           <button
             v-for="keyword in hotKeywords.keywords.slice(0, 6)"
             :key="keyword.keyword"
             @click="handleKeywordClick(keyword.keyword)"
-            class="px-3 py-1 text-sm bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors flex items-center gap-1"
+            class="keyword-tag px-3 py-1 text-sm rounded-full transition-colors flex items-center gap-1"
           >
             {{ keyword.keyword }}
             <span
@@ -367,7 +367,7 @@ onMounted(() => {
         <!-- AI 爆品推荐 Top 4 -->
         <div class="glass-card p-6">
           <div class="flex items-center justify-between mb-4">
-            <h2 class="text-lg font-semibold text-slate-800 dark:text-white">AI 爆品推荐</h2>
+            <h2 class="text-lg font-semibold text-[var(--text-primary)]">AI 爆品推荐</h2>
             <button
               @click="router.push({ name: 'HotProducts' })"
               class="text-sm text-orange-500 hover:text-orange-600"
@@ -375,7 +375,7 @@ onMounted(() => {
               查看更多 →
             </button>
           </div>
-          
+
           <div v-if="hotRecommendations?.products.length" class="grid grid-cols-2 gap-4">
             <ProductCard
               v-for="hotProduct in hotRecommendations.products.slice(0, 4)"
@@ -385,28 +385,28 @@ onMounted(() => {
               @click="handleProductClick"
             />
           </div>
-          <p v-else class="text-slate-500 dark:text-slate-400 text-center py-8">暂无爆品推荐</p>
+          <p v-else class="empty-text text-center py-8">暂无爆品推荐</p>
         </div>
 
         <!-- 最近活动 -->
         <div class="glass-card p-6">
-          <h2 class="text-lg font-semibold text-slate-800 dark:text-white mb-4">最近活动</h2>
-          
+          <h2 class="text-lg font-semibold text-[var(--text-primary)] mb-4">最近活动</h2>
+
           <!-- 最近搜索 -->
           <div v-if="recentActivity?.recentSearches.length" class="mb-6">
-            <h3 class="text-sm font-medium text-slate-600 dark:text-slate-400 mb-3">最近搜索</h3>
+            <h3 class="text-sm font-medium text-[var(--text-muted)] mb-3">最近搜索</h3>
             <div class="space-y-2">
               <button
                 v-for="search in recentActivity.recentSearches.slice(0, 5)"
                 :key="search.id"
                 @click="handleSearchHistoryClick(search.query)"
-                class="w-full flex items-center justify-between p-3 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors text-left"
+                class="search-history-item w-full flex items-center justify-between p-3 rounded-lg transition-colors text-left"
               >
                 <div class="flex items-center gap-2 flex-1 min-w-0">
                   <svg class="w-4 h-4 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
-                  <span class="text-sm text-slate-700 dark:text-slate-300 truncate">{{ search.query }}</span>
+                  <span class="text-sm text-[var(--text-secondary)] truncate">{{ search.query }}</span>
                 </div>
                 <span class="text-xs text-slate-400 flex-shrink-0 ml-2">{{ search.resultCount }} 个结果</span>
               </button>
@@ -415,7 +415,7 @@ onMounted(() => {
 
           <!-- 最近浏览 -->
           <div v-if="recentActivity?.recentBrowsed.length">
-            <h3 class="text-sm font-medium text-slate-600 dark:text-slate-400 mb-3">最近浏览</h3>
+            <h3 class="text-sm font-medium text-[var(--text-muted)] mb-3">最近浏览</h3>
             <div class="grid grid-cols-4 gap-2">
               <button
                 v-for="product in recentActivity.recentBrowsed.slice(0, 4)"
@@ -432,7 +432,7 @@ onMounted(() => {
             </div>
           </div>
 
-          <p v-if="!recentActivity?.recentSearches.length && !recentActivity?.recentBrowsed.length" class="text-slate-500 dark:text-slate-400 text-center py-8">
+          <p v-if="!recentActivity?.recentSearches.length && !recentActivity?.recentBrowsed.length" class="empty-text text-center py-8">
             暂无最近活动
           </p>
         </div>
@@ -440,15 +440,98 @@ onMounted(() => {
 
       <!-- 热门品类趋势图表 -->
       <div class="glass-card p-6">
-        <h2 class="text-lg font-semibold text-slate-800 dark:text-white mb-4">热门品类趋势</h2>
+        <h2 class="text-lg font-semibold text-[var(--text-primary)] mb-4">热门品类趋势</h2>
         <div
           v-if="trendingCategories?.categories.length"
           id="trend-chart"
           class="w-full"
           style="height: 400px;"
         ></div>
-        <p v-else class="text-slate-500 dark:text-slate-400 text-center py-8">暂无趋势数据</p>
+        <p v-else class="empty-text text-center py-8">暂无趋势数据</p>
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* Icon boxes for stat cards */
+.icon-box {
+  transition: background-color var(--transition-normal);
+}
+
+.icon-box-blue {
+  background-color: rgba(59, 130, 246, 0.15);
+}
+
+.icon-box-orange {
+  background-color: rgba(249, 115, 22, 0.15);
+}
+
+.icon-box-pink {
+  background-color: rgba(236, 72, 153, 0.15);
+}
+
+.icon-box-green {
+  background-color: rgba(16, 185, 129, 0.15);
+}
+
+/* Search input */
+.search-input {
+  background: var(--bg-card);
+  border-color: var(--border);
+  color: var(--text-primary);
+}
+
+.search-input::placeholder {
+  color: var(--text-muted);
+}
+
+.search-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+/* Keyword tags */
+.keyword-tag {
+  background: var(--bg-card-hover);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+.keyword-tag:hover {
+  background: var(--bg-card);
+  border-color: var(--border-hover);
+  color: var(--text-primary);
+}
+
+/* Search history items */
+.search-history-item {
+  background: var(--bg-card-hover);
+}
+
+.search-history-item:hover {
+  background: var(--bg-card);
+}
+
+/* Empty text */
+.empty-text {
+  color: var(--text-muted);
+}
+
+/* Light mode overrides */
+:global(html.light) .icon-box-blue {
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+:global(html.light) .icon-box-orange {
+  background-color: rgba(249, 115, 22, 0.1);
+}
+
+:global(html.light) .icon-box-pink {
+  background-color: rgba(236, 72, 153, 0.1);
+}
+
+:global(html.light) .icon-box-green {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+</style>

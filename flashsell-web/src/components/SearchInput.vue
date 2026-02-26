@@ -138,7 +138,7 @@ function handleFileChange(e: Event) {
         <textarea
           ref="textareaRef"
           v-model="inputValue"
-          :placeholder="placeholder || t('search.placeholder')"
+          :placeholder="placeholder || t('search.placeholder', '描述你想找的产品...')"
           :disabled="disabled"
           :maxlength="maxLength"
           rows="1"

@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -177,30 +178,28 @@ public class FavoriteAppService {
     }
 
     /**
-     * 批量获取产品映射
+     * 批量获取产品映射（优化：使用批量查询避免N+1问题）
      */
     private Map<Long, Product> getProductMap(List<Long> productIds) {
         if (productIds == null || productIds.isEmpty()) {
             return Map.of();
         }
-        return productIds.stream()
-                .map(productGateway::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+        // 使用批量查询替代循环单个查询
+        List<Product> products = productGateway.findByIds(productIds);
+        return products.stream()
                 .collect(Collectors.toMap(Product::getId, p -> p));
     }
 
     /**
-     * 批量获取品类映射
+     * 批量获取品类映射（优化：使用批量查询避免N+1问题）
      */
     private Map<Long, Category> getCategoryMap(Set<Long> categoryIds) {
         if (categoryIds == null || categoryIds.isEmpty()) {
             return Map.of();
         }
-        return categoryIds.stream()
-                .map(categoryGateway::findById)
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+        // 使用批量查询替代循环单个查询
+        List<Category> categories = categoryGateway.findByIds(new ArrayList<>(categoryIds));
+        return categories.stream()
                 .collect(Collectors.toMap(Category::getId, c -> c));
     }
 }

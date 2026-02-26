@@ -58,6 +58,11 @@ public class UserDO {
     private String email;
 
     /**
+     * 用户角色：USER-普通用户, ADMIN-管理员
+     */
+    private String role;
+
+    /**
      * 订阅等级：FREE-免费版, BASIC-基础版, PRO-专业版
      */
     @TableField("subscription_level")

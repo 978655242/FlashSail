@@ -130,7 +130,8 @@ const userPlan = computed(() => {
       @click="handleToggle"
       role="button"
       tabindex="0"
-      aria-label="Toggle sidebar"
+      :aria-label="props.collapsed ? 'Expand sidebar' : 'Collapse sidebar'"
+      :aria-expanded="!props.collapsed"
       @keydown.enter="handleToggle"
       @keydown.space.prevent="handleToggle"
     >
@@ -152,13 +153,13 @@ const userPlan = computed(() => {
         </svg>
       </div>
       <div v-if="!props.collapsed" class="logo-text overflow-hidden">
-        <h1 class="font-bold text-lg text-white whitespace-nowrap">FlashSell</h1>
-        <p class="text-xs text-slate-500 whitespace-nowrap">AI智能选品</p>
+        <h1 class="sidebar-logo font-bold text-lg whitespace-nowrap">FlashSell</h1>
+        <p class="sidebar-subtitle text-xs whitespace-nowrap">AI智能选品</p>
       </div>
     </div>
 
     <!-- Navigation -->
-    <nav class="flex-1 overflow-y-auto px-2">
+    <nav class="flex-1 overflow-y-auto px-2" role="navigation" aria-label="Main navigation">
       <!-- Main Navigation Section -->
       <div 
         v-if="!props.collapsed" 
@@ -179,9 +180,10 @@ const userPlan = computed(() => {
             : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent'
         ]"
         @click="navigateTo(item)"
-        role="button"
+        role="link"
         tabindex="0"
         :aria-current="isActive(item) ? 'page' : undefined"
+        :aria-label="item.label"
         @keydown.enter="navigateTo(item)"
         @keydown.space.prevent="navigateTo(item)"
       >
@@ -250,9 +252,10 @@ const userPlan = computed(() => {
             : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-200 border border-transparent'
         ]"
         @click="navigateTo(item)"
-        role="button"
+        role="link"
         tabindex="0"
         :aria-current="isActive(item) ? 'page' : undefined"
+        :aria-label="item.label"
         @keydown.enter="navigateTo(item)"
         @keydown.space.prevent="navigateTo(item)"
       >
@@ -296,10 +299,10 @@ const userPlan = computed(() => {
       
       <!-- User Info (when expanded) -->
       <div v-if="!props.collapsed" class="flex-1 ml-3 overflow-hidden">
-        <div class="font-medium text-sm text-white truncate">
+        <div class="user-name font-medium text-sm truncate">
           {{ userName }}
         </div>
-        <div class="text-xs text-slate-500 truncate">
+        <div class="user-plan text-xs truncate">
           {{ userPlan }} · Member
         </div>
       </div>
@@ -352,9 +355,27 @@ const userPlan = computed(() => {
   will-change: width, transform;
 }
 
+/* Logo text colors */
+.sidebar-logo {
+  color: var(--text-primary);
+}
+
+.sidebar-subtitle {
+  color: var(--text-muted);
+}
+
+/* User info colors */
+.user-name {
+  color: var(--text-primary);
+}
+
+.user-plan {
+  color: var(--text-muted);
+}
+
 /* Nav item hover effect */
 .nav-item {
-  transition: 
+  transition:
     background-color var(--transition-normal),
     color var(--transition-normal),
     border-color var(--transition-normal);
@@ -363,6 +384,7 @@ const userPlan = computed(() => {
 /* User section minimum height */
 .user-section {
   min-height: 72px;
+  border-top-color: var(--border-subtle);
 }
 
 /* Hide scrollbar but keep functionality */
@@ -409,15 +431,27 @@ nav::-webkit-scrollbar-thumb:hover {
   color: var(--text-muted);
 }
 
-:global(html.light) .logo-text h1 {
+:global(html.light) .sidebar-logo {
   color: var(--text-primary);
+}
+
+:global(html.light) .sidebar-subtitle {
+  color: var(--text-muted);
 }
 
 :global(html.light) .user-section {
   border-top-color: var(--glass-border-light);
 }
 
-:global(html.light) .user-section .font-medium {
+:global(html.light) .user-name {
   color: var(--text-primary);
+}
+
+:global(html.light) .user-plan {
+  color: var(--text-muted);
+}
+
+:global(html.light) .sidebar-toggle:hover {
+  background: rgba(0, 0, 0, 0.05);
 }
 </style>

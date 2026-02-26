@@ -7,12 +7,12 @@ spring:
   profiles:
     active: dev
 
-  # 数据源配置
+  # 数据源配置 (生产环境使用环境变量)
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/flashsell
-    username: flashsell
-    password: flashsell123
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:flashsell}
+    username: ${DB_USERNAME:flashsell}
+    password: ${DB_PASSWORD:}
 
   # Flyway 配置
   flyway:
@@ -39,10 +39,10 @@ spring:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
 
-  # Spring AI 智谱配置
+  # Spring AI 智谱配置 (生产环境必须设置 ZHIPU_API_KEY 环境变量)
   ai:
     zhipuai:
-      api-key: ${ZHIPU_API_KEY:test-api-key-placeholder}
+      api-key: ${ZHIPU_API_KEY:}
       chat:
         options:
           model: glm-4
@@ -95,3 +95,13 @@ flashsell:
   scheduler:
     # 爆品分析定时任务 Cron 表达式（默认每日凌晨 2:00）
     hot-product-cron: "0 0 2 * * ?"
+
+# CORS 配置 (生产环境通过环境变量 CORS_ALLOWED_ORIGINS 设置)
+cors:
+  allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,http://localhost:3001,http://localhost:3002,http://localhost:3003}
+
+# JWT 配置 (生产环境必须设置 JWT_SECRET 环境变量)
+jwt:
+  secret: ${JWT_SECRET:flashsell-secret-key-must-be-at-least-256-bits-long-for-hs256}
+  access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION:3600000}
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000}

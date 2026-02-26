@@ -6,6 +6,7 @@ import com.flashsell.app.service.ProductDataService;
 import com.flashsell.domain.ai.entity.HotProductScore;
 import com.flashsell.domain.category.entity.Category;
 import com.flashsell.domain.category.gateway.CategoryGateway;
+import com.flashsell.domain.common.gateway.DistributedLockGateway;
 import com.flashsell.domain.product.entity.Product;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +20,9 @@ import java.util.List;
 /**
  * 爆品推荐定时任务
  * 每日凌晨 2:00 执行，分析所有品类的爆品
- * 
+ *
+ * 使用分布式锁防止多实例部署时任务重复执行
+ *
  * Requirements: 11.1, 11.2, 11.6, 11.7, 15.1
  */
 @Component
@@ -27,17 +30,41 @@ import java.util.List;
 @RequiredArgsConstructor
 public class HotProductScheduler {
 
+    private static final String LOCK_KEY_HOT_PRODUCT = "hot-product-analysis";
+    private static final String LOCK_KEY_CATEGORY_ANALYSIS = "category-analysis:";
+
     private final CategoryGateway categoryGateway;
     private final ProductDataService productDataService;
     private final HotProductAnalysisService hotProductAnalysisService;
     private final HotProductAppService hotProductAppService;
+    private final DistributedLockGateway distributedLockGateway;
 
     /**
      * 每日凌晨 2:00 执行爆品分析任务
      * 遍历所有 45 个品类，通过 Bright Data 获取热销商品，AI 分析并保存 Top 20 爆品
+     *
+     * 使用分布式锁确保多实例部署时只有一个实例执行
      */
     @Scheduled(cron = "${flashsell.scheduler.hot-product-cron:0 0 2 * * ?}")
     public void analyzeHotProducts() {
+        // 尝试获取分布式锁，锁持有时间 10 分钟
+        String lockValue = distributedLockGateway.tryLock(LOCK_KEY_HOT_PRODUCT, 0, 600);
+        if (lockValue == null) {
+            log.info("无法获取分布式锁，其他实例正在执行爆品分析任务，跳过本次执行");
+            return;
+        }
+
+        try {
+            doAnalyzeHotProducts();
+        } finally {
+            distributedLockGateway.releaseLock(LOCK_KEY_HOT_PRODUCT, lockValue);
+        }
+    }
+
+    /**
+     * 执行爆品分析任务的实际逻辑
+     */
+    private void doAnalyzeHotProducts() {
         LocalDateTime startTime = LocalDateTime.now();
         log.info("========== 开始执行爆品分析定时任务 ==========");
         log.info("任务开始时间: {}", startTime);

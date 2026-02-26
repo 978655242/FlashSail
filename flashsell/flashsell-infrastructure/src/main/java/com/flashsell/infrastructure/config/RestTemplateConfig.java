@@ -2,12 +2,13 @@ package com.flashsell.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
-import org.springframework.http.converter.StringHttpMessageConverter;
-import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,9 +21,8 @@ public class RestTemplateConfig {
 
     /**
      * RestTemplate Bean
-     * 配置 ByteArrayHttpMessageConverter 在第一位
-     * 这样可以正确处理二进制数据（包括 gzip 压缩数据）
-     * 避免 StringHttpMessageConverter 拦截二进制响应
+     * 配置 ByteArrayHttpMessageConverter 支持所有媒体类型
+     * 配置 MappingJackson2HttpMessageConverter 支持 JSON
      */
     @Bean
     public RestTemplate restTemplate() {
@@ -32,12 +32,19 @@ public class RestTemplateConfig {
 
         RestTemplate restTemplate = new RestTemplate(factory);
 
-        // 重要：ByteArrayHttpMessageConverter 必须在第一位
-        // 这样才能正确处理所有响应（包括 gzip 压缩和纯文本）
+        // 配置 ByteArrayHttpMessageConverter 支持所有媒体类型
+        ByteArrayHttpMessageConverter byteArrayConverter = new ByteArrayHttpMessageConverter();
+        byteArrayConverter.setSupportedMediaTypes(Arrays.asList(
+            MediaType.ALL
+        ));
+
+        // 配置 JSON 转换器
+        MappingJackson2HttpMessageConverter jsonConverter = new MappingJackson2HttpMessageConverter();
+
+        // 设置消息转换器列表
         restTemplate.setMessageConverters(List.of(
-            new ByteArrayHttpMessageConverter(),
-            new StringHttpMessageConverter(),
-            new AllEncompassingFormHttpMessageConverter()
+            byteArrayConverter,
+            jsonConverter
         ));
 
         return restTemplate;

@@ -144,4 +144,13 @@ public class CategoryGatewayImpl implements CategoryGateway {
     public int countAllGroups() {
         return categoryGroupMapper.countAll();
     }
+
+    @Override
+    public List<Category> findByIds(List<Long> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return List.of();
+        }
+        List<CategoryDO> categoryDOs = categoryMapper.selectByIds(ids);
+        return categoryConvertor.toEntityList(categoryDOs);
+    }
 }

@@ -1,5 +1,6 @@
 package com.flashsell.infrastructure.config;
 
+import com.flashsell.domain.user.entity.UserRole;
 import com.flashsell.domain.user.gateway.SessionGateway;
 import com.flashsell.domain.user.gateway.TokenGateway;
 import jakarta.servlet.FilterChain;
@@ -9,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -17,6 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * JWT认证过滤器
@@ -26,37 +29,41 @@ import java.util.Collections;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    
+
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
-    
+
     private final TokenGateway tokenGateway;
     private final SessionGateway sessionGateway;
-    
+
     @Override
-    protected void doFilterInternal(HttpServletRequest request, 
-                                    HttpServletResponse response, 
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
         try {
             String token = extractToken(request);
-            
+
             if (StringUtils.hasText(token)) {
                 // 验证令牌格式和签名
                 if (tokenGateway.validateToken(token) && tokenGateway.isAccessToken(token)) {
-                    // 获取用户ID
+                    // 获取用户ID和角色
                     Long userId = tokenGateway.getUserIdFromToken(token);
-                    
+                    UserRole role = tokenGateway.getRoleFromToken(token);
+
                     // 验证会话是否存在（用户是否已登出）
                     if (sessionGateway.hasSession(userId)) {
-                        // 创建认证对象，将userId作为principal
-                        UsernamePasswordAuthenticationToken authentication = 
-                                new UsernamePasswordAuthenticationToken(userId, null, Collections.emptyList());
+                        // 创建认证对象，包含用户ID和角色权限
+                        List<SimpleGrantedAuthority> authorities = Collections.singletonList(
+                                new SimpleGrantedAuthority(role.getAuthority())
+                        );
+                        UsernamePasswordAuthenticationToken authentication =
+                                new UsernamePasswordAuthenticationToken(userId, null, authorities);
                         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                        
+
                         // 设置到SecurityContext
                         SecurityContextHolder.getContext().setAuthentication(authentication);
-                        
-                        log.debug("JWT认证成功: userId={}", userId);
+
+                        log.debug("JWT认证成功: userId={}, role={}", userId, role);
                     } else {
                         log.debug("会话已失效: userId={}", userId);
                     }
@@ -66,13 +73,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.debug("JWT认证失败: {}", e.getMessage());
             // 认证失败不抛出异常，让请求继续，由Spring Security处理未认证请求
         }
-        
+
         filterChain.doFilter(request, response);
     }
-    
+
     /**
      * 从请求头中提取JWT令牌
-     * 
+     *
      * @param request HTTP请求
      * @return JWT令牌，如果不存在则返回null
      */

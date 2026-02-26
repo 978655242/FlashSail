@@ -60,4 +60,18 @@ public interface CategoryMapper extends BaseMapper<CategoryDO> {
      */
     @Select("SELECT COUNT(*) FROM categories")
     int countAll();
+
+    /**
+     * 根据ID列表批量查询品类
+     *
+     * @param ids 品类ID列表
+     * @return 品类列表
+     */
+    @Select("<script>" +
+            "SELECT * FROM categories WHERE id IN " +
+            "<foreach collection='ids' item='id' open='(' separator=',' close=')'>" +
+            "#{id}" +
+            "</foreach>" +
+            "</script>")
+    List<CategoryDO> selectByIds(@Param("ids") List<Long> ids);
 }

@@ -188,4 +188,9 @@ if (typeof window !== 'undefined') {
   min-height: 100vh;
   z-index: 1;
 }
+
+/* Light mode aurora orbs - more subtle */
+html.light .aurora-orb {
+  opacity: 0.4;
+}
 </style>

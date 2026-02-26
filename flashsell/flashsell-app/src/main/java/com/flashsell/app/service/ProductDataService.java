@@ -110,13 +110,25 @@ public class ProductDataService {
 
         // 2. 标准化数据
         List<Product> products = new ArrayList<>();
+        log.info("开始处理搜索结果: hasData={}, dataSize={}",
+                fallbackResult.hasData(),
+                fallbackResult.getData() != null ? fallbackResult.getData().size() : "null");
+
         if (fallbackResult.hasData()) {
             for (AmazonProduct amazonProduct : fallbackResult.getData()) {
                 try {
+                    log.debug("处理产品: asin={}, title={}", amazonProduct.getAsin(), amazonProduct.getTitle());
                     Product product = convertAmazonToProduct(amazonProduct);
+
+                    if (product == null) {
+                        log.warn("转换产品失败，结果为null: asin={}", amazonProduct.getAsin());
+                        continue;
+                    }
 
                     // 3. 如果指定了品类，过滤不匹配的产品
                     if (categoryId != null && !categoryId.equals(product.getCategoryId())) {
+                        log.debug("品类不匹配，跳过: asin={}, productCategoryId={}, filterCategoryId={}",
+                                amazonProduct.getAsin(), product.getCategoryId(), categoryId);
                         continue;
                     }
 
@@ -127,8 +139,9 @@ public class ProductDataService {
                     }
 
                     products.add(product);
+                    log.debug("产品添加成功: asin={}", amazonProduct.getAsin());
                 } catch (Exception e) {
-                    log.warn("转换商品数据失败: asin={}, error={}", amazonProduct.getAsin(), e.getMessage());
+                    log.warn("转换商品数据失败: asin={}, error={}", amazonProduct.getAsin(), e.getMessage(), e);
                 }
             }
         }

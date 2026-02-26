@@ -38,10 +38,10 @@ const { t } = useI18n()
 
 /** Default thinking steps if none provided */
 const defaultSteps = computed<ThinkingStep[]>(() => [
-  { id: 'analyzing', label: t('search.thinking.analyzing'), status: 'active' },
-  { id: 'searching', label: t('search.thinking.searching'), status: 'pending' },
-  { id: 'evaluating', label: t('search.thinking.evaluating'), status: 'pending' },
-  { id: 'generating', label: t('search.thinking.generating'), status: 'pending' }
+  { id: 'analyzing', label: t('search.thinking.analyzing', '正在分析您的需求...'), status: 'active' },
+  { id: 'searching', label: t('search.thinking.searching', '正在搜索相关产品...'), status: 'pending' },
+  { id: 'evaluating', label: t('search.thinking.evaluating', '正在评估产品数据...'), status: 'pending' },
+  { id: 'generating', label: t('search.thinking.generating', '正在生成推荐结果...'), status: 'pending' }
 ])
 
 /** Steps to display */

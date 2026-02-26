@@ -182,34 +182,32 @@ body {
   }
 }
 
-/* Light Theme Overrides - Improved Contrast */
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-primary: #f8fafc;
-    --bg-secondary: #ffffff;
-    --bg-tertiary: #f1f5f9;
-    --text-primary: #0f172a;
-    --text-secondary: #475569;
-    --text-muted: #94a3b8;
-    --border: #e2e8f0;
-    --border-hover: #cbd5e1;
-  }
+/* Light Theme Overrides - Using html.light class for consistency */
+html.light {
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --border: #e2e8f0;
+  --border-hover: #cbd5e1;
+}
 
-  .aurora-bg {
-    opacity: 0.5;
-  }
+html.light .aurora-bg {
+  opacity: 0.5;
+}
 
-  /* Improved light mode glass card visibility (addresses anti-pattern) */
-  .glass-card {
-    background: rgba(255, 255, 255, 0.85);
-    border: 1px solid rgba(226, 232, 240, 0.8);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
+/* Improved light mode glass card visibility */
+html.light .glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
-  .glass-card-hover:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(249, 115, 22, 0.2);
-  }
+html.light .glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(249, 115, 22, 0.2);
 }
 
 /* Focus States - Critical for Accessibility (Keyboard Navigation) */
