@@ -293,7 +293,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="subscription-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="subscription-page">
     <!-- Page Header -->
     <PageHeader
       :title="t('subscription.title')"
@@ -301,8 +301,8 @@ onMounted(() => {
     />
 
     <!-- Current Subscription Status -->
-    <GlassCard 
-      v-if="currentPlanInfo && !isLoading" 
+    <GlassCard
+      v-if="currentPlanInfo && !isLoading"
       variant="primary"
       class="current-plan-card mb-8 p-6"
     >
@@ -311,10 +311,10 @@ onMounted(() => {
           <p class="text-sm text-orange-400 mb-1">
             {{ t('subscription.currentPlan') }}
           </p>
-          <h3 class="text-xl font-bold text-white">
+          <h3 class="text-xl font-bold text-[var(--text-primary)]">
             {{ currentPlanInfo.name }}
           </h3>
-          <p class="text-xs text-slate-400 mt-1">
+          <p class="text-xs text-[var(--text-muted)] mt-1">
             <span v-if="currentPlanInfo.isActive" class="text-green-400">
               ● {{ t('common.ok') }}
             </span>
@@ -326,7 +326,7 @@ onMounted(() => {
             </span>
           </p>
         </div>
-        <Badge 
+        <Badge
           :variant="getBadgeVariant(currentStatus?.level || 'FREE')"
           size="md"
         >
@@ -349,29 +349,29 @@ onMounted(() => {
       >
         <!-- Plan Header -->
         <div class="text-center mb-6">
-          <Badge 
+          <Badge
             :variant="getBadgeVariant(plan.level)"
             size="md"
             class="mb-3"
           >
             {{ getPlanDisplayName(plan.level) }}
           </Badge>
-          
-          <div class="text-4xl font-bold text-white mt-2">
+
+          <div class="text-4xl font-bold text-[var(--text-primary)] mt-2">
             <span v-if="plan.price === 0">{{ t('subscription.plans.free.name') }}</span>
             <span v-else>
               ¥{{ plan.price }}
-              <span class="text-sm font-normal text-slate-400">{{ t('subscription.perMonth') }}</span>
+              <span class="text-sm font-normal text-[var(--text-muted)]">{{ t('subscription.perMonth') }}</span>
             </span>
           </div>
-          
-          <p class="text-slate-400 text-sm mt-2">
+
+          <p class="text-[var(--text-muted)] text-sm mt-2">
             {{ plan.durationDays }} {{ t('common.all') }}
           </p>
         </div>
 
         <!-- Plan Description -->
-        <p class="text-slate-400 text-sm text-center mb-6">
+        <p class="text-[var(--text-muted)] text-sm text-center mb-6">
           {{ getPlanDescription(plan.level) }}
         </p>
 
@@ -382,49 +382,49 @@ onMounted(() => {
             <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
             </svg>
-            <span class="text-slate-300">{{ plan.searchLimit }} {{ t('search.title') }}</span>
+            <span class="text-[var(--text-secondary)]">{{ plan.searchLimit }} {{ t('search.title') }}</span>
           </li>
-          
+
           <!-- Export Limit -->
           <li class="flex items-center text-sm">
             <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
             </svg>
-            <span class="text-slate-300">{{ plan.exportLimit }} {{ t('common.more') }}</span>
+            <span class="text-[var(--text-secondary)]">{{ plan.exportLimit }} {{ t('common.more') }}</span>
           </li>
-          
+
           <!-- Board Limit -->
           <li class="flex items-center text-sm">
             <svg class="w-5 h-5 text-green-500 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
             </svg>
-            <span class="text-slate-300">{{ plan.boardLimit }} {{ t('favorites.title') }}</span>
+            <span class="text-[var(--text-secondary)]">{{ plan.boardLimit }} {{ t('favorites.title') }}</span>
           </li>
-          
+
           <!-- AI Analysis -->
           <li class="flex items-center text-sm">
-            <svg 
-              :class="['w-5 h-5 mr-2 flex-shrink-0', plan.aiAnalysisEnabled ? 'text-green-500' : 'text-slate-600']" 
-              fill="currentColor" 
+            <svg
+              :class="['w-5 h-5 mr-2 flex-shrink-0', plan.aiAnalysisEnabled ? 'text-green-500' : 'text-[var(--text-muted)]']"
+              fill="currentColor"
               viewBox="0 0 20 20"
             >
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
             </svg>
-            <span :class="['text-slate-300', { 'line-through opacity-50': !plan.aiAnalysisEnabled }]">
+            <span :class="['text-[var(--text-secondary)]', { 'line-through opacity-50': !plan.aiAnalysisEnabled }]">
               {{ t('product.aiAnalysis') }}
             </span>
           </li>
-          
+
           <!-- API Access -->
           <li class="flex items-center text-sm">
-            <svg 
-              :class="['w-5 h-5 mr-2 flex-shrink-0', plan.apiAccessEnabled ? 'text-green-500' : 'text-slate-600']" 
-              fill="currentColor" 
+            <svg
+              :class="['w-5 h-5 mr-2 flex-shrink-0', plan.apiAccessEnabled ? 'text-green-500' : 'text-[var(--text-muted)]']"
+              fill="currentColor"
               viewBox="0 0 20 20"
             >
               <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
             </svg>
-            <span :class="['text-slate-300', { 'line-through opacity-50': !plan.apiAccessEnabled }]">
+            <span :class="['text-[var(--text-secondary)]', { 'line-through opacity-50': !plan.apiAccessEnabled }]">
               API {{ t('common.ok') }}
             </span>
           </li>
@@ -445,31 +445,31 @@ onMounted(() => {
 
     <!-- Loading State -->
     <div v-else class="flex justify-center items-center py-12">
-      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500"></div>
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[var(--primary)]"></div>
     </div>
 
     <!-- Payment Modal -->
     <Teleport to="body">
-      <div 
-        v-if="showPaymentModal" 
+      <div
+        v-if="showPaymentModal"
         class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
         @click.self="closePaymentModal"
       >
         <GlassCard class="payment-modal p-6 max-w-md w-full mx-4">
-          <h3 class="text-xl font-bold text-white mb-4">
+          <h3 class="text-xl font-bold text-[var(--text-primary)] mb-4">
             {{ t('common.confirm') }}
           </h3>
-          
+
           <div class="mb-6">
-            <p class="text-slate-400">
+            <p class="text-[var(--text-muted)]">
               {{ t('subscription.plans.pro.description') }}
               <span class="font-bold text-orange-400">{{ selectedPlan?.name }}</span>
             </p>
-            <p class="text-3xl font-bold text-white mt-2">
+            <p class="text-3xl font-bold text-[var(--text-primary)] mt-2">
               ¥{{ selectedPlan?.price }}
             </p>
           </div>
-          
+
           <div class="space-y-3">
             <Button
               variant="primary"
@@ -480,7 +480,7 @@ onMounted(() => {
             >
               {{ isPolling ? t('common.loading') : t('common.confirm') }}
             </Button>
-            
+
             <Button
               variant="ghost"
               :disabled="isPolling"
@@ -490,8 +490,8 @@ onMounted(() => {
               {{ t('common.cancel') }}
             </Button>
           </div>
-          
-          <p class="text-xs text-slate-500 mt-4 text-center">
+
+          <p class="text-xs text-[var(--text-muted)] mt-4 text-center">
             {{ t('common.noData') }}
           </p>
         </GlassCard>
@@ -537,12 +537,18 @@ onMounted(() => {
   }
 }
 
+/* Light mode adjustments */
+:global(html.light) .current-plan-card {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(249, 115, 22, 0.03) 100%);
+  border: 1px solid rgba(249, 115, 22, 0.2);
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .plans-grid {
     gap: 1rem;
   }
-  
+
   .plan-card {
     padding: 1.25rem;
   }

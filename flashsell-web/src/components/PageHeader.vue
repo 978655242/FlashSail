@@ -16,13 +16,13 @@ defineEmits<{
 </script>
 
 <template>
-  <div class="page-header">
+  <div class="page-header mb-6">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div class="flex items-center gap-4">
         <!-- 返回按钮 -->
         <button
           v-if="showBack"
-          class="p-2 text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 rounded-lg transition-colors"
+          class="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-card-hover)] rounded-lg transition-colors"
           @click="$emit('back')"
         >
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -32,8 +32,8 @@ defineEmits<{
 
         <!-- 标题 -->
         <div>
-          <h1 class="text-2xl font-bold text-white">{{ title }}</h1>
-          <p v-if="subtitle" class="mt-1 text-sm text-slate-400">{{ subtitle }}</p>
+          <h1 class="text-2xl font-bold text-[var(--text-primary)]">{{ title }}</h1>
+          <p v-if="subtitle" class="mt-1 text-sm text-[var(--text-muted)]">{{ subtitle }}</p>
         </div>
       </div>
 

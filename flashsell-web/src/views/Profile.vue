@@ -20,6 +20,7 @@ import type { UserProfile, UserUsageStats } from '@/api/user'
 import GlassCard from '@/components/GlassCard.vue'
 import Button from '@/components/Button.vue'
 import Badge from '@/components/Badge.vue'
+import PageHeader from '@/components/PageHeader.vue'
 import { useI18n } from '@/composables/useI18n'
 import { useToast } from '@/composables/useToast'
 
@@ -185,13 +186,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="profile-page">
     <!-- Page Header -->
-    <div class="mb-8">
-      <h1 class="text-2xl font-bold text-[var(--text-primary)]">
-        {{ t('profile.title') }}
-      </h1>
-    </div>
+    <PageHeader :title="t('profile.title')" />
 
     <!-- Loading State -->
     <div v-if="isLoading" class="flex justify-center items-center py-12">
@@ -237,7 +234,7 @@ onMounted(() => {
         <!-- Avatar and Basic Info -->
         <div class="flex items-center gap-6 mb-6">
           <!-- Avatar -->
-          <div 
+          <div
             class="w-20 h-20 rounded-full bg-gradient-to-br from-[var(--primary)] to-pink-600 flex items-center justify-center text-white text-2xl font-bold shadow-lg"
             data-testid="profile-avatar"
           >
@@ -247,13 +244,13 @@ onMounted(() => {
           <!-- Name and Phone -->
           <div class="flex-1">
             <div v-if="!isEditing">
-              <h3 
+              <h3
                 class="text-xl font-semibold text-[var(--text-primary)] mb-1"
                 data-testid="profile-name"
               >
                 {{ displayName }}
               </h3>
-              <p 
+              <p
                 class="text-[var(--text-secondary)]"
                 data-testid="profile-phone"
               >
@@ -279,8 +276,8 @@ onMounted(() => {
           </div>
 
           <!-- Subscription Badge -->
-          <Badge 
-            :variant="subscriptionBadgeVariant" 
+          <Badge
+            :variant="subscriptionBadgeVariant"
             size="md"
             data-testid="profile-subscription-badge"
           >
@@ -339,7 +336,7 @@ onMounted(() => {
           <div>
             <div class="flex justify-between items-center mb-2">
               <span class="text-sm text-[var(--text-secondary)]">
-                导出次数
+                {{ t('profile.exports', '导出次数') }}
               </span>
               <span class="text-sm font-medium text-[var(--text-primary)]">
                 {{ usageStats.exportCount }} / {{ usageStats.exportLimit }}
@@ -377,7 +374,7 @@ onMounted(() => {
           <div>
             <div class="flex justify-between items-center mb-2">
               <span class="text-sm text-[var(--text-secondary)]">
-                看板数
+                {{ t('profile.boards', '看板数') }}
               </span>
               <span class="text-sm font-medium text-[var(--text-primary)]">
                 {{ usageStats.boardCount }} / {{ usageStats.boardLimit }}
@@ -407,7 +404,7 @@ onMounted(() => {
               {{ t('nav.logout') }}
             </h3>
             <p class="text-sm text-[var(--text-muted)]">
-              退出当前账户
+              {{ t('profile.logoutHint', '退出当前账户') }}
             </p>
           </div>
           <Button
@@ -425,3 +422,9 @@ onMounted(() => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.profile-page {
+  min-height: calc(100vh - 200px);
+}
+</style>
