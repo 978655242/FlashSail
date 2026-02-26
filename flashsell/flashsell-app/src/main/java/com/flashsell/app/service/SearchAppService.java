@@ -7,7 +7,9 @@ import com.flashsell.domain.ai.entity.AiSearchResult;
 import com.flashsell.domain.ai.service.AiDomainService;
 import com.flashsell.domain.category.entity.Category;
 import com.flashsell.domain.category.gateway.CategoryGateway;
+import com.flashsell.domain.data.entity.DataFreshness;
 import com.flashsell.domain.product.entity.Product;
+import com.flashsell.domain.product.gateway.ProductGateway;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +38,7 @@ public class SearchAppService {
     private final AiDomainService aiDomainService;
     private final ProductDataService productDataService;
     private final CategoryGateway categoryGateway;
+    private final ProductGateway productGateway;
     private final SearchAssembler searchAssembler;
     private final RedisTemplate<String, Object> redisTemplate;
 
@@ -91,12 +94,35 @@ public class SearchAppService {
         String searchKeyword = getSearchKeyword(req.getQuery(), aiResult);
 
         // 6. 从 Bright Data 获取实时数据
-        ProductDataService.ProductSearchResult dataResult = 
+        ProductDataService.ProductSearchResult dataResult =
                 productDataService.searchProductsWithFallback(searchKeyword, categoryId);
+
+        // 6.1 如果 Bright Data 没有返回数据，尝试从本地数据库搜索
+        List<Product> products = dataResult.getProducts();
+        DataFreshness dataFreshness = dataResult.getDataFreshness();
+
+        if (products.isEmpty()) {
+            log.info("Bright Data 未返回数据，尝试从本地数据库搜索: keyword={}", searchKeyword);
+            products = productGateway.findByTitleContaining(searchKeyword);
+
+            // 如果AI提取的关键词没找到，尝试用原始查询词搜索
+            if (products.isEmpty() && !searchKeyword.equals(req.getQuery())) {
+                log.info("AI关键词未找到结果，尝试用原始查询词搜索: originalQuery={}", req.getQuery());
+                products = productGateway.findByTitleContaining(req.getQuery());
+            }
+
+            if (!products.isEmpty()) {
+                log.info("从本地数据库找到 {} 个产品", products.size());
+                dataFreshness = DataFreshness.stale(
+                    LocalDateTime.now(),
+                    "数据来自本地缓存，Bright Data API 暂时不可用"
+                );
+            }
+        }
 
         // 7. 应用筛选条件
         List<Product> filteredProducts = applyFilters(
-                dataResult.getProducts(),
+                products,
                 req.getPriceMin() != null ? req.getPriceMin() : aiResult.getPriceMin(),
                 req.getPriceMax() != null ? req.getPriceMax() : aiResult.getPriceMax(),
                 req.getMinRating() != null ? req.getMinRating() : aiResult.getMinRating(),
@@ -115,7 +141,7 @@ public class SearchAppService {
                 page,
                 pageSize,
                 aiResult.getSummary(),
-                dataResult.getDataFreshness()
+                dataFreshness
         );
 
         // 10. 缓存结果

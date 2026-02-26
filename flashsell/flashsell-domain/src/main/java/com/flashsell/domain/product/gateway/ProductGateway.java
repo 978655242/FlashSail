@@ -132,4 +132,12 @@ public interface ProductGateway {
      * @return 产品列表
      */
     List<Product> findByIds(List<Long> ids);
+
+    /**
+     * 根据标题模糊搜索产品
+     *
+     * @param keyword 搜索关键词
+     * @return 匹配的产品列表
+     */
+    List<Product> findByTitleContaining(String keyword);
 }

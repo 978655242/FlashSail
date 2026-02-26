@@ -222,4 +222,13 @@ public class ProductGatewayImpl implements ProductGateway {
         List<ProductDO> productDOList = productMapper.selectBatchIds(ids);
         return productConvertor.toEntityList(productDOList);
     }
+
+    @Override
+    public List<Product> findByTitleContaining(String keyword) {
+        if (keyword == null || keyword.isEmpty()) {
+            return List.of();
+        }
+        List<ProductDO> productDOList = productMapper.selectByTitleContaining(keyword);
+        return productConvertor.toEntityList(productDOList);
+    }
 }

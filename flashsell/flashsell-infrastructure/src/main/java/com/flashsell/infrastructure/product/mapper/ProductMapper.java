@@ -117,7 +117,16 @@ public interface ProductMapper extends BaseMapper<ProductDO> {
      * @return 产品数量
      */
     @Select("SELECT COUNT(*) FROM products WHERE category_id = #{categoryId} AND created_at BETWEEN #{startTime} AND #{endTime}")
-    Long countProductsCreatedBetween(@Param("categoryId") Long categoryId, 
-                                     @Param("startTime") java.time.LocalDateTime startTime, 
+    Long countProductsCreatedBetween(@Param("categoryId") Long categoryId,
+                                     @Param("startTime") java.time.LocalDateTime startTime,
                                      @Param("endTime") java.time.LocalDateTime endTime);
+
+    /**
+     * 根据标题模糊搜索产品
+     *
+     * @param keyword 搜索关键词
+     * @return 匹配的产品列表
+     */
+    @Select("SELECT * FROM products WHERE title ILIKE CONCAT('%', #{keyword}, '%') ORDER BY last_updated DESC LIMIT 50")
+    List<ProductDO> selectByTitleContaining(@Param("keyword") String keyword);
 }
