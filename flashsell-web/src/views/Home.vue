@@ -12,12 +12,10 @@ import {
   getHotRecommendations,
   getRecentActivity,
   getTrendingCategories,
-  getHotKeywords,
   type DashboardOverviewRes,
   type HotRecommendationsRes,
   type RecentActivityRes,
-  type TrendingCategoriesRes,
-  type HotKeywordsRes
+  type TrendingCategoriesRes
 } from '@/api/dashboard'
 import type { ProductDTO } from '@/types/product'
 
@@ -32,10 +30,6 @@ const overview = ref<DashboardOverviewRes | null>(null)
 const hotRecommendations = ref<HotRecommendationsRes | null>(null)
 const recentActivity = ref<RecentActivityRes | null>(null)
 const trendingCategories = ref<TrendingCategoriesRes | null>(null)
-const hotKeywords = ref<HotKeywordsRes | null>(null)
-
-// 快速搜索
-const searchQuery = ref('')
 
 // 图表实例
 let trendChart: echarts.ECharts | null = null
@@ -60,19 +54,17 @@ async function loadDashboardData() {
 
   try {
     // 并行加载所有数据
-    const [overviewData, hotRecsData, activityData, categoriesData, keywordsData] = await Promise.all([
+    const [overviewData, hotRecsData, activityData, categoriesData] = await Promise.all([
       getOverview(),
       getHotRecommendations(),
       getRecentActivity(),
-      getTrendingCategories(),
-      getHotKeywords()
+      getTrendingCategories()
     ])
 
     overview.value = overviewData
     hotRecommendations.value = hotRecsData
     recentActivity.value = activityData
     trendingCategories.value = categoriesData
-    hotKeywords.value = keywordsData
 
     // 渲染图表
     await renderTrendChart()
@@ -177,23 +169,6 @@ async function renderTrendChart() {
   // 响应式调整
   window.addEventListener('resize', () => {
     trendChart?.resize()
-  })
-}
-
-// 处理快速搜索
-function handleQuickSearch() {
-  if (!searchQuery.value.trim()) return
-  router.push({
-    name: 'Search',
-    query: { q: searchQuery.value }
-  })
-}
-
-// 处理热门关键词点击
-function handleKeywordClick(keyword: string) {
-  router.push({
-    name: 'Search',
-    query: { q: keyword }
   })
 }
 
@@ -319,49 +294,6 @@ onMounted(() => {
         </div>
       </div>
 
-      <!-- 快速搜索入口 -->
-      <div class="glass-card p-6 mb-8">
-        <h2 class="text-lg font-semibold text-[var(--text-primary)] mb-4">快速搜索</h2>
-        <form @submit.prevent="handleQuickSearch" class="flex gap-4">
-          <input
-            v-model="searchQuery"
-            type="text"
-            placeholder="输入产品关键词，AI 帮你找爆品..."
-            class="search-input flex-1 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-          />
-          <button
-            type="submit"
-            class="btn-gradient-primary px-6 py-3 disabled:opacity-50 disabled:cursor-not-allowed"
-            :disabled="!searchQuery.trim()"
-          >
-            搜索
-          </button>
-        </form>
-
-        <!-- 热门关键词 -->
-        <div v-if="hotKeywords?.keywords.length" class="mt-4 flex flex-wrap gap-2 items-center">
-          <span class="text-sm text-[var(--text-muted)]">热门搜索：</span>
-          <button
-            v-for="keyword in hotKeywords.keywords.slice(0, 6)"
-            :key="keyword.keyword"
-            @click="handleKeywordClick(keyword.keyword)"
-            class="keyword-tag px-3 py-1 text-sm rounded-full transition-colors flex items-center gap-1"
-          >
-            {{ keyword.keyword }}
-            <span
-              v-if="keyword.trend === 'UP'"
-              class="text-green-500"
-              title="上升趋势"
-            >↑</span>
-            <span
-              v-else-if="keyword.trend === 'DOWN'"
-              class="text-red-500"
-              title="下降趋势"
-            >↓</span>
-          </button>
-        </div>
-      </div>
-
       <!-- AI 爆品推荐 & 最近活动 -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <!-- AI 爆品推荐 Top 4 -->
@@ -473,35 +405,6 @@ onMounted(() => {
 
 .icon-box-green {
   background-color: rgba(16, 185, 129, 0.15);
-}
-
-/* Search input */
-.search-input {
-  background: var(--bg-card);
-  border-color: var(--border);
-  color: var(--text-primary);
-}
-
-.search-input::placeholder {
-  color: var(--text-muted);
-}
-
-.search-input:focus {
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
-}
-
-/* Keyword tags */
-.keyword-tag {
-  background: var(--bg-card-hover);
-  color: var(--text-secondary);
-  border: 1px solid var(--border-subtle);
-}
-
-.keyword-tag:hover {
-  background: var(--bg-card);
-  border-color: var(--border-hover);
-  color: var(--text-primary);
 }
 
 /* Search history items */
