@@ -336,38 +336,49 @@ onMounted(() => {
     </GlassCard>
 
     <!-- Subscription Plans Grid -->
-    <div v-if="!isLoading" class="plans-grid grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div v-if="!isLoading" class="plans-grid grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
       <GlassCard
         v-for="plan in plans"
         :key="plan.id"
         :variant="getPlanVariant(plan.level)"
         :hover="!isCurrentPlan(plan)"
-        class="plan-card p-6 flex flex-col"
-        :class="{ 'ring-2 ring-orange-500': isCurrentPlan(plan) }"
+        class="plan-card p-6 flex flex-col relative"
+        :class="{
+          'ring-2 ring-orange-500': isCurrentPlan(plan),
+          'glow-orange border-orange-500/50': plan.level === 'BASIC' && !isCurrentPlan(plan)
+        }"
         :data-plan-level="plan.level"
         :data-is-current="isCurrentPlan(plan)"
       >
-        <!-- Plan Header -->
-        <div class="text-center mb-6">
-          <Badge
-            :variant="getBadgeVariant(plan.level)"
-            size="md"
-            class="mb-3"
-          >
-            {{ getPlanDisplayName(plan.level) }}
-          </Badge>
+        <!-- Current Plan Badge -->
+        <div v-if="isCurrentPlan(plan)" class="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span class="bg-slate-600 text-white px-4 py-1 rounded-full text-sm font-medium">
+            {{ t('subscription.current') }}
+          </span>
+        </div>
 
-          <div class="text-4xl font-bold text-[var(--text-primary)] mt-2">
-            <span v-if="plan.price === 0">{{ t('subscription.plans.free.name') }}</span>
+        <!-- Recommended Badge for Pro Plan -->
+        <div v-else-if="plan.level === 'BASIC'" class="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span class="bg-gradient-to-r from-orange-500 to-orange-600 text-white px-4 py-1 rounded-full text-sm font-medium shadow-lg shadow-orange-500/30">
+            {{ t('subscription.recommended', '推荐') }}
+          </span>
+        </div>
+
+        <!-- Plan Header -->
+        <div class="text-center mb-6" :class="{ 'mt-4': isCurrentPlan(plan) || plan.level === 'BASIC' }">
+          <h3 class="text-xl font-semibold text-white">
+            {{ getPlanDisplayName(plan.level) }}
+          </h3>
+
+          <div class="mt-4">
+            <span v-if="plan.price === 0" class="text-4xl font-bold text-white">
+              {{ t('subscription.plans.free.name') }}
+            </span>
             <span v-else>
-              ¥{{ plan.price }}
-              <span class="text-sm font-normal text-[var(--text-muted)]">{{ t('subscription.perMonth') }}</span>
+              <span class="text-4xl font-bold text-white">${{ plan.price }}</span>
+              <span class="text-slate-400">/月</span>
             </span>
           </div>
-
-          <p class="text-[var(--text-muted)] text-sm mt-2">
-            {{ plan.durationDays }} {{ t('common.all') }}
-          </p>
         </div>
 
         <!-- Plan Description -->
@@ -466,7 +477,7 @@ onMounted(() => {
               <span class="font-bold text-orange-400">{{ selectedPlan?.name }}</span>
             </p>
             <p class="text-3xl font-bold text-[var(--text-primary)] mt-2">
-              ¥{{ selectedPlan?.price }}
+              ${{ selectedPlan?.price }}
             </p>
           </div>
 
@@ -508,6 +519,11 @@ onMounted(() => {
 .current-plan-card {
   background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(249, 115, 22, 0.05) 100%);
   border: 1px solid rgba(249, 115, 22, 0.3);
+}
+
+/* Orange glow effect for recommended plan */
+.glow-orange {
+  box-shadow: 0 0 20px rgba(249, 115, 22, 0.3), 0 0 40px rgba(249, 115, 22, 0.1);
 }
 
 .plan-card {

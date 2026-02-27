@@ -152,7 +152,7 @@ async function handleSubmit() {
               <defs>
                 <linearGradient id="lightning-gradient" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse">
                   <stop stop-color="#F97316"/>
-                  <stop offset="1" stop-color="#EA580C"/>
+                  <stop offset="1" stop-color="#3B82F6"/>
                 </linearGradient>
               </defs>
             </svg>
