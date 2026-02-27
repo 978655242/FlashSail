@@ -1,3 +1,5 @@
+export type Platform = 'amazon' | 'ebay' | 'aliexpress' | 'tiktok'
+
 export interface ProductDTO {
   id: number
   title: string
@@ -10,6 +12,9 @@ export interface ProductDTO {
   categoryName: string | null
   competitionScore?: number
   category?: Category
+  platforms?: Platform[]
+  priceChange?: number
+  salesTrend?: 'up' | 'down' | 'stable'
 }
 
 export interface Category {
