@@ -217,8 +217,8 @@ function handleNewBoard() {
       :columns="4"
     />
 
-    <!-- Favorites Grid - Same style as Search page -->
-    <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <!-- Favorites Grid - 5 columns as per design spec -->
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
       <ProductCard
         v-for="product in filteredFavorites"
         :key="product.id"
